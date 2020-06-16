@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, Component } from 'react';
+import styled from '@emotion/styled';
+import { ThemeProvider } from 'emotion-theming';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faSearch,
+  faTicketAlt,
+  faFilm,
+  faBell,
+  faUserCircle,
+  faArrowAltCircleRight,
+} from '@fortawesome/fontawesome-free-solid';
+import { Router } from '@reach/router';
+import theme from '@app/src/theme';
+import Navbar from '@app/src/components/Navbar';
 
-function App() {
+const AppContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-top: 55px;
+  background: ${(props) => props.theme.colors.app};
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const App = () => {
+  useEffect(() => {
+    library.add(
+      faSearch,
+      faTicketAlt,
+      faFilm,
+      faBell,
+      faUserCircle,
+      faArrowAltCircleRight
+    );
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Navbar />
+      <AppContainer></AppContainer>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
