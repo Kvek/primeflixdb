@@ -11,16 +11,24 @@ const SearchBarContainer = styled.div`
   height: 100%;
   padding: 0;
   margin: 0;
+
+  @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
+    min-width: 350px;
+    max-width: 550px;
+  }
 `;
 const InputContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 350px;
-  max-width: 550px;
   width: 100%;
   border: 1px solid;
   position: relative;
+
+  @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
+    min-width: 275px;
+    max-width: 550px;
+  }
 
   input {
     padding: 0 2%;
@@ -44,6 +52,22 @@ const IconContainer = styled.span`
   svg {
     opacity: 0.7;
     font-size: 18px;
+
+    &.search {
+      display: none;
+
+      @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
+        display: flex;
+      }
+    }
+
+    &.cross {
+      display: flex;
+
+      @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
+        display: none;
+      }
+    }
   }
 
   &:hover {
@@ -98,7 +122,7 @@ const Options = styled.li`
   }
 `;
 
-const Searchbar = () => {
+const Searchbar = ({ onIconClick }) => {
   const [searchInput, setsearchInput] = useState('');
   const [searchOptions, setSearchOptions] = useState(null);
   const [isBlured, setIsBlured] = useState(true);
@@ -137,8 +161,9 @@ const Searchbar = () => {
           </SelectContainer>
         )}
       </InputContainer>
-      <IconContainer>
-        <FontAwesomeIcon icon='search' />
+      <IconContainer onClick={onIconClick}>
+        <FontAwesomeIcon icon='times' className='cross' />
+        <FontAwesomeIcon icon='search' className='search' />
       </IconContainer>
     </SearchBarContainer>
   );

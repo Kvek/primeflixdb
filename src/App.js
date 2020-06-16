@@ -9,6 +9,8 @@ import {
   faBell,
   faUserCircle,
   faArrowAltCircleRight,
+  faBars,
+  faTimes,
 } from '@fortawesome/fontawesome-free-solid';
 import { Router } from '@reach/router';
 import theme from '@app/src/theme';
@@ -26,7 +28,7 @@ const AppContainer = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  margin-top: 55px;
+  padding-top: 55px;
   background: ${(props) => props.theme.colors.app};
 
   &::-webkit-scrollbar {
@@ -42,7 +44,9 @@ const App = () => {
       faFilm,
       faBell,
       faUserCircle,
-      faArrowAltCircleRight
+      faArrowAltCircleRight,
+      faBars,
+      faTimes
     );
   }, []);
 

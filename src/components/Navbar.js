@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import Searchbar from './Searchbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -100,63 +100,126 @@ const LoginContainer = styled.div`
   }
 `;
 
+const MobileNav = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  padding: 0 10px;
+
+  svg {
+    width: 20px;
+
+    &.hamburger {
+      margin-right: 10px;
+    }
+  }
+
+  @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
+    display: none;
+  }
+`;
+
+const SearchMobileContainer = styled.div`
+  width: 100%;
+  display: none;
+
+  &.showMobileSearch {
+    display: block;
+  }
+`;
+
+const DesktopNav = styled.div`
+  display: none;
+
+  @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
+    display: flex;
+    width: 100%;
+  }
+`;
+
 const Navbar = () => {
+  const [showSearch, setshowSearch] = useState(false);
   return (
     <NavbarContainer>
-      <LogoContainer>
-        <LogoItem>
-          <Link to='/'>
-            <FontAwesomeIcon icon='ticket-alt' color={'deepskyblue'} />
-            <FontAwesomeIcon icon='film' color={'tomato'} />
-          </Link>
-        </LogoItem>
-      </LogoContainer>
-      <NavListContainer>
-        <NavList>
-          <Match key={'home'} path={'/'}>
-            {({ match }) => (
-              <Link to='/'>
-                <NavListItems isActive={match !== null}>Home</NavListItems>
-              </Link>
-            )}
-          </Match>
-          <Match key={'tv'} path={'/tv'}>
-            {({ match }) => (
-              <Link to='/tv'>
-                <NavListItems isActive={match !== null}>Tv</NavListItems>
-              </Link>
-            )}
-          </Match>
-          <Match key={'films'} path={'/films'}>
-            {({ match }) => (
-              <Link to='/films'>
-                <NavListItems isActive={match !== null}>Films</NavListItems>
-              </Link>
-            )}
-          </Match>
-          <Match key={'trailers'} path={'/trailers'}>
-            {({ match }) => (
-              <Link to='/trailers'>
-                <NavListItems isActive={match !== null}>Trailers</NavListItems>
-              </Link>
-            )}
-          </Match>
-          <Match key={'playlists'} path={'/playlists'}>
-            {({ match }) => (
-              <Link to='/playlists'>
-                <NavListItems isActive={match !== null}>Playlists</NavListItems>
-              </Link>
-            )}
-          </Match>
-        </NavList>
-      </NavListContainer>
-      <SearchContainer>
-        <Searchbar />
-      </SearchContainer>
-      <LoginContainer>
-        <FontAwesomeIcon icon='bell' />
-        <FontAwesomeIcon icon='user-circle' />
-      </LoginContainer>
+      <MobileNav>
+        <FontAwesomeIcon icon='bars' size='lg' className='hamburger' />
+
+        {!showSearch && (
+          <FontAwesomeIcon
+            icon='search'
+            size='lg'
+            onClick={() => setshowSearch(true)}
+          />
+        )}
+        {showSearch && (
+          <SearchMobileContainer className={showSearch && 'showMobileSearch'}>
+            <Searchbar onIconClick={() => setshowSearch(false)} />
+          </SearchMobileContainer>
+        )}
+      </MobileNav>
+
+      <DesktopNav>
+        <LogoContainer>
+          <LogoItem>
+            <Link to='/'>
+              <FontAwesomeIcon icon='ticket-alt' color={'deepskyblue'} />
+              <FontAwesomeIcon icon='film' color={'tomato'} />
+            </Link>
+          </LogoItem>
+        </LogoContainer>
+        <NavListContainer>
+          <NavList>
+            <Match key={'home'} path={'/'}>
+              {({ match }) => (
+                <Link to='/'>
+                  <NavListItems isActive={match !== null}>Home</NavListItems>
+                </Link>
+              )}
+            </Match>
+            <Match key={'tv'} path={'/tv'}>
+              {({ match }) => (
+                <Link to='/tv'>
+                  <NavListItems isActive={match !== null}>Tv</NavListItems>
+                </Link>
+              )}
+            </Match>
+            <Match key={'films'} path={'/films'}>
+              {({ match }) => (
+                <Link to='/films'>
+                  <NavListItems isActive={match !== null}>Films</NavListItems>
+                </Link>
+              )}
+            </Match>
+            <Match key={'trailers'} path={'/trailers'}>
+              {({ match }) => (
+                <Link to='/trailers'>
+                  <NavListItems isActive={match !== null}>
+                    Trailers
+                  </NavListItems>
+                </Link>
+              )}
+            </Match>
+            <Match key={'playlists'} path={'/playlists'}>
+              {({ match }) => (
+                <Link to='/playlists'>
+                  <NavListItems isActive={match !== null}>
+                    Playlists
+                  </NavListItems>
+                </Link>
+              )}
+            </Match>
+          </NavList>
+        </NavListContainer>
+        <SearchContainer>
+          <Searchbar />
+        </SearchContainer>
+        <LoginContainer>
+          <FontAwesomeIcon icon='bell' />
+          <FontAwesomeIcon icon='user-circle' />
+        </LoginContainer>
+      </DesktopNav>
     </NavbarContainer>
   );
 };
