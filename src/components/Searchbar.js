@@ -101,13 +101,13 @@ const Options = styled.li`
 const Searchbar = () => {
   const [searchInput, setsearchInput] = useState('');
   const [searchOptions, setSearchOptions] = useState(null);
+  const [isBlured, setIsBlured] = useState(true);
 
   useEffect(() => {
     if (searchInput) {
       Axios.get(
         `https://api.themoviedb.org/3/search/movie?api_key=b4ac50bea5731f7106812c256c1b3048&query=${searchInput}`
       ).then((res) => {
-        console.log(res.data.results);
         return setSearchOptions(res.data.results);
       });
     }
@@ -119,11 +119,17 @@ const Searchbar = () => {
         <input
           type='text'
           value={searchInput}
-          onChange={(e) => setsearchInput(e.target.value)}
+          onChange={(e) => {
+            setsearchInput(e.target.value);
+            setIsBlured(false);
+          }}
+          onFocus={() => setIsBlured(false)}
+          onBlur={() => setIsBlured(true)}
         />
-        {searchOptions && (
+        {searchOptions && searchInput && !isBlured && (
           <SelectContainer>
             <Select>
+              {searchOptions.length === 0 && <Options>No results</Options>}
               {searchOptions.map(({ poster_path, title }) => {
                 return <Options>{title}</Options>;
               })}
