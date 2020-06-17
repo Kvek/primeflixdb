@@ -21,6 +21,7 @@ import Home from '@app/src/pages/Home';
 import Tv from '@app/src/pages/Tv';
 import Trailers from '@app/src/pages/Trailers';
 import Playlists from '@app/src/pages/Playlists';
+import Sidebar from '@app/src/components/Sidebar';
 
 const AppContainer = styled.div`
   width: 100%;
@@ -33,6 +34,7 @@ const AppContainer = styled.div`
   margin: 55px 0 0;
   padding: 10px 0 0;
   background: ${(props) => props.theme.colors.app};
+  position: relative;
 
   &::-webkit-scrollbar {
     display: none;
@@ -65,6 +67,7 @@ const App = () => {
           <Playlists path='/playlists' />
         </Router>
       </AppContainer>
+      <Sidebar />
     </ThemeProvider>
   );
 };

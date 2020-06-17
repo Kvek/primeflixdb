@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import Searchbar from './Searchbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, Match } from '@reach/router';
+import { useSetRecoilState } from 'recoil';
+import isSidebarOpen from '@app/src/atoms/sidebarStatus.atom';
 
 const NavbarContainer = styled.div`
   display: flex;
@@ -167,10 +169,17 @@ const DesktopNav = styled.div`
 
 const Navbar = () => {
   const [showSearch, setshowSearch] = useState(false);
+  const setSidebarStatus = useSetRecoilState(isSidebarOpen);
+
   return (
     <NavbarContainer>
       <MobileNav>
-        <FontAwesomeIcon icon='bars' size='lg' className='hamburger' />
+        <FontAwesomeIcon
+          icon='bars'
+          size='lg'
+          className='hamburger'
+          onClick={() => setSidebarStatus(true)}
+        />
 
         <SearchMobileContainer>
           <SearchbaWrapper className={showSearch && 'showMobileSearch'}>
