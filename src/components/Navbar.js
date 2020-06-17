@@ -91,11 +91,11 @@ const SearchContainer = styled.div`
 `;
 
 const LoginContainer = styled.div`
-  width: 125px;
+  width: 150px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  font-size: 25px;
+  font-size: 21px;
 
   svg {
     cursor: pointer;
