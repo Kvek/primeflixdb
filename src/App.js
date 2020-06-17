@@ -24,11 +24,14 @@ import Playlists from '@app/src/pages/Playlists';
 
 const AppContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  min-width: calc(100% - 40px);
+  height: calc(100vh - 55px);
+  max-height: calc(100vh - 65px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding-top: 55px;
+  margin: 55px 0 0;
+  padding: 10px 0 0;
   background: ${(props) => props.theme.colors.app};
 
   &::-webkit-scrollbar {
@@ -52,8 +55,8 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Navbar />
       <AppContainer>
+        <Navbar />
         <Router>
           <Home path='/' />
           <Tv path='/tv' />
