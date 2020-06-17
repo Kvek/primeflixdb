@@ -155,6 +155,7 @@ const SearchbaWrapper = styled.div`
 
   &.showMobileSearch {
     width: 100%;
+    overflow: visible;
   }
 `;
 
