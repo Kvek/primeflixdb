@@ -123,10 +123,36 @@ const MobileNav = styled.div`
 
 const SearchMobileContainer = styled.div`
   width: 100%;
-  display: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+
+  > .showSearchIcon {
+    opacity: 1;
+    visibility: visible;
+    position: absolute;
+    right: 0;
+    transition: all 0.3s linear;
+  }
+
+  > .hideSearchIcon {
+    width: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.05s linear;
+  }
+`;
+
+const SearchbaWrapper = styled.div`
+  width: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  transition: all 0.2s linear;
 
   &.showMobileSearch {
-    display: block;
+    width: 100%;
   }
 `;
 
@@ -146,18 +172,18 @@ const Navbar = () => {
       <MobileNav>
         <FontAwesomeIcon icon='bars' size='lg' className='hamburger' />
 
-        {!showSearch && (
+        <SearchMobileContainer>
+          <SearchbaWrapper className={showSearch && 'showMobileSearch'}>
+            <Searchbar onIconClick={() => setshowSearch(false)} />
+          </SearchbaWrapper>
+
           <FontAwesomeIcon
             icon='search'
             size='lg'
             onClick={() => setshowSearch(true)}
+            className={!showSearch ? 'showSearchIcon' : 'hideSearchIcon'}
           />
-        )}
-        {showSearch && (
-          <SearchMobileContainer className={showSearch && 'showMobileSearch'}>
-            <Searchbar onIconClick={() => setshowSearch(false)} />
-          </SearchMobileContainer>
-        )}
+        </SearchMobileContainer>
       </MobileNav>
 
       <DesktopNav>
