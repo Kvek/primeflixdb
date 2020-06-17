@@ -16,6 +16,10 @@ const SearchBarContainer = styled.div`
     min-width: 350px;
     max-width: 550px;
   }
+
+  @media (min-width: ${(props) => props.theme.maxPageWidth.desktop}) {
+    max-width: none;
+  }
 `;
 const InputContainer = styled.div`
   display: flex;
