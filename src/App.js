@@ -1,4 +1,4 @@
-import React, { useEffect, Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { ThemeProvider } from 'emotion-theming';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -14,6 +14,11 @@ import {
 } from '@fortawesome/fontawesome-free-solid';
 import { Router } from '@reach/router';
 import theme from '@app/src/theme';
+import { getTrending, getMediaVideo } from '@app/src/Api';
+
+import trendingFilms from '@app/src/atoms/trendingFilms.atom';
+import { useSetRecoilState } from 'recoil';
+
 import Navbar from '@app/src/components/Navbar';
 
 import Films from '@app/src/pages/Films';
@@ -42,6 +47,8 @@ const AppContainer = styled.div`
 `;
 
 const App = () => {
+  const setTrending = useSetRecoilState(trendingFilms);
+
   useEffect(() => {
     library.add(
       faSearch,
@@ -53,6 +60,30 @@ const App = () => {
       faBars,
       faTimes
     );
+
+    getTrending()
+      .then((res) => {
+        return res?.data?.results;
+      })
+      .then((res) => {
+        let newData = res.map(async (film) => {
+          const { media_type, id } = film;
+          let videoData = [];
+
+          await getMediaVideo(media_type, id).then((res) => {
+            const data = {
+              ...film,
+              ...{ video: res?.data?.results[0] },
+            };
+            videoData = data;
+          });
+          return videoData;
+        });
+
+        Promise.all(newData).then((data) => {
+          setTrending(data);
+        });
+      });
   }, []);
 
   return (

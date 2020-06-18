@@ -5,7 +5,8 @@ const baseURL = 'https://api.themoviedb.org/3';
 
 const params = { params: { api_key: APIKey } };
 
-const get = (url) => Axios.get(`${baseURL}${url}`, params);
+const get = (url, param = {}) =>
+  Axios.get(`${baseURL}${url}`, { ...params, ...param });
 
 const post = (url, body) => Axios.post(`${baseURL}${url}`, params, { body });
 
@@ -15,3 +16,7 @@ const remove = (url) => Axios.delete(`${baseURL}${url}`, params);
 
 // Endpoints
 export const getPopular = () => get('/movie/popular');
+
+export const getTrending = () => get('/trending/all/week');
+
+export const getMediaVideo = (media, id) => get(`/${media}/${id}/videos`);
