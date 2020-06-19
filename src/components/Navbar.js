@@ -18,6 +18,7 @@ const NavbarContainer = styled.div`
   font-size: 16px;
   padding: 0 20px 0 0;
   margin: 0;
+  z-index: 2;
 
   a {
     text-decoration: none;

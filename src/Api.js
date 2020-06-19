@@ -15,6 +15,9 @@ const put = (url) => Axios.put(`${baseURL}${url}`, params);
 const remove = (url) => Axios.delete(`${baseURL}${url}`, params);
 
 // Endpoints
+
+export const getConfig = () => get('/configuration');
+
 export const getPopular = () => get('/movie/popular');
 
 export const getTrending = () => get('/trending/all/week');

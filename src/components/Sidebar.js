@@ -19,7 +19,7 @@ const SidebarContainer = styled.div`
 
 const SidebarWrapper = styled.div`
   width: 0%;
-  height: 100%;
+  height: 100vh;
   display: block;
   position: absolute;
   top: 0;
@@ -28,13 +28,14 @@ const SidebarWrapper = styled.div`
   right: 0;
   transition: width 0.0125s linear;
   background-color: rgba(0, 0, 0, 0.45);
+  overflow: hidden;
 
   @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
     display: none;
   }
 
   &.isSidebarOpen {
-    z-index: 1;
+    z-index: 2;
     width: 100%;
 
     ${SidebarContainer} {
