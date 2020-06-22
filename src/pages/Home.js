@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
+
 import styled from '@emotion/styled';
 
 import trendingFilms from '@app/src/atoms/trendingFilms.atom';
 import appConfig from '@app/src/atoms/appConfig.atom';
+import FilmTile from '@app/src/components/FilmTile';
 
 const HomeContainer = styled.div`
   display: flex;
@@ -52,15 +54,12 @@ const BackdropImage = styled.div`
     background-size: cover;
   }
 `;
+
 const TileContainer = styled.div`
   display: flex;
-  flex-direction: column;
   width: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  top: calc(100% - 250px);
+  overflow: scroll;
+  height: 100%;
 `;
 
 const Home = () => {
@@ -103,7 +102,12 @@ const Home = () => {
       >
         <BackdropGradient />
       </BackdropImage>
-      <TileContainer></TileContainer>
+
+      <TileContainer>
+        {trending.map((film) => {
+          return <FilmTile film={film} key={film?.id} />;
+        })}
+      </TileContainer>
     </HomeContainer>
   );
 };
