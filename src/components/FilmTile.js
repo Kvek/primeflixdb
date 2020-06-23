@@ -38,25 +38,34 @@ const FilmTileMetaContainer = styled.div`
 const FilmTileWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 249px;
-  height: 149px;
-  min-width: 249px;
-  min-height: 149px;
+  width: 250px;
+  height: 147px;
+  min-width: 250px;
+  min-height: 147px;
   transition: transform 0.25s linear 0.1s,
     max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
-  margin: 10px;
+  margin: 0 10px;
   cursor: pointer;
   background-image: url(${(props) => props.bgImage});
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
-  border: 0;
+  position: relative;
 
   @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
-    height: 208px;
-    width: 364px;
-    min-width: 364px;
+    height: 173px;
+    width: 295px;
+  }
+
+  @media (min-width: ${(props) => props.theme.maxPageWidth.desktop}) {
+    height: 188px;
+    width: 320px;
+  }
+
+  @media (min-width: ${(props) => props.theme.maxPageWidth.wide}) {
+    height: 215px;
+    width: 365px;
   }
 
   &:hover {
