@@ -64,6 +64,7 @@ const FilmTileWrapper = styled.div`
     max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
   margin: 0 10px;
   cursor: pointer;
+  pointer-events: auto;
 
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.25) -1px 3px 8px 0px;
@@ -71,16 +72,19 @@ const FilmTileWrapper = styled.div`
   @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
     height: 173px;
     width: 295px;
+    min-width: 295px;
   }
 
   @media (min-width: ${(props) => props.theme.maxPageWidth.desktop}) {
     height: 188px;
     width: 320px;
+    min-width: 320px;
   }
 
   @media (min-width: ${(props) => props.theme.maxPageWidth.wide}) {
     height: 215px;
     width: 365px;
+    min-width: 365px;
   }
 
   &:hover {
@@ -89,6 +93,8 @@ const FilmTileWrapper = styled.div`
   }
 
   &.showMeta {
+    margin-top: 14px;
+    margin-bottom: -4px;
     transition: max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0s;
 
     @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
@@ -114,19 +120,26 @@ const FilmTileWrapper = styled.div`
   }
 `;
 
-const FilmTile = ({ film }) => {
+const FilmTile = ({ film, setShowTileMeta }) => {
   const { backdrop_path } = film;
   const [showMeta, setShowMeta] = useState(false);
 
   return (
     <FilmTileWrapper
-      onMouseLeave={() => setShowMeta(false)}
+      onMouseLeave={() => {
+        setShowMeta(false);
+        setShowTileMeta(false);
+      }}
       className={showMeta && 'showMeta'}
     >
       <FilmTileContainer
         bgImage={
           backdrop_path && `https://image.tmdb.org/t/p/w500/${backdrop_path}`
         }
+        onClick={() => {
+          setShowMeta(true);
+          setShowTileMeta(true);
+        }}
       />
       <FilmTileMetaContainer>
         {showMeta && (
