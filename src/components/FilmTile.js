@@ -62,7 +62,7 @@ const FilmTileWrapper = styled.div`
   min-height: 147px;
   transition: transform 0.25s linear 0.1s,
     max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
-  margin: 0 10px;
+  margin: 10px 5px;
   cursor: pointer;
   pointer-events: auto;
 
@@ -88,13 +88,12 @@ const FilmTileWrapper = styled.div`
   }
 
   &:hover {
-    transform: scale(1.15);
+    transform: scale(1.05);
     transition: transform 0.25s linear 0s;
   }
 
   &.showMeta {
-    margin-top: 14px;
-    margin-bottom: -4px;
+    transform: scale(1.05) translateY(0%);
     transition: max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0s;
 
     @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
@@ -144,7 +143,7 @@ const FilmTile = ({ film, setShowTileMeta }) => {
       <FilmTileMetaContainer>
         {showMeta && (
           <YouTube
-            onReady={(event) => event.target.playVideo()}
+            // onReady={(event) => event.target.playVideo()}
             onEnd={() => showMeta && setShowMeta(false)}
             containerClassName='youtubeContainer'
             modestbranding={1}

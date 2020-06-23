@@ -20,11 +20,21 @@ const HomeContainer = styled.div`
   margin-top: 55px;
 `;
 
+const Carousel = styled.div``;
+
 const TileContainer = styled.div`
   display: flex;
-  width: 100%;
-  overflow: scroll;
+  flex-direction: column;
   height: 100%;
+  overflow: hidden;
+
+  ${Carousel} {
+    &:nth-last-of-type(1) {
+      .showMeta {
+        padding-bottom: 200px;
+      }
+    }
+  }
 `;
 
 const Home = () => {
@@ -36,7 +46,17 @@ const Home = () => {
   return (
     <HomeContainer>
       <BackdropImage baseUrl={secure_base_url} films={trending} />
-      <TileContainer></TileContainer>
+      <TileContainer>
+        <Carousel>
+          <FilmCarousel films={trending} />
+        </Carousel>
+        <Carousel>
+          <FilmCarousel films={trending} />
+        </Carousel>
+        <Carousel>
+          <FilmCarousel films={trending} />
+        </Carousel>
+      </TileContainer>
     </HomeContainer>
   );
 };
