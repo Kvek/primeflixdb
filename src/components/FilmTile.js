@@ -74,15 +74,24 @@ const FilmTileWrapper = styled.div`
   }
 
   &.showMeta {
-    @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
-      max-height: 420px;
-      transition: max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+    transition: max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0s;
 
-      ${FilmTileMetaContainer} {
-        transition: height 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s;
-        display: flex;
-        min-height: 100%;
-      }
+    @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
+      max-height: 346px;
+    }
+
+    @media (min-width: ${(props) => props.theme.maxPageWidth.desktop}) {
+      max-height: 376px;
+    }
+
+    @media (min-width: ${(props) => props.theme.maxPageWidth.wide}) {
+      max-height: 430px;
+    }
+
+    ${FilmTileMetaContainer} {
+      transition: height 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+      display: flex;
+      min-height: 100%;
     }
   }
 `;
