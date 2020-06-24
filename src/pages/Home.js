@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import trendingFilms from '@app/src/atoms/trendingFilms.atom';
 import appConfig from '@app/src/atoms/appConfig.atom';
 import BackdropImage from '@app/src/components/BackdropImage';
-import FilmCarousel from '@app/src/components/FilmCarousel';
+import FilmCarouselContainer from '@app/src/containers/FilmCarouselContainer';
 
 const HomeContainer = styled.div`
   display: flex;
@@ -38,15 +38,15 @@ const Home = () => {
     <HomeContainer>
       <BackdropImage baseUrl={secure_base_url} films={trending} />
       <TilesContainer>
-        <FilmCarousel films={trending} />
-        <FilmCarousel films={trending} />
-        <FilmCarousel films={trending} />
-        <FilmCarousel films={trending} />
-        <FilmCarousel films={trending} />
-        <FilmCarousel films={trending} />
-        <FilmCarousel films={trending} />
-        <FilmCarousel films={trending} />
-        <FilmCarousel films={trending} />
+        <FilmCarouselContainer films={trending} />
+        <FilmCarouselContainer films={trending} />
+        <FilmCarouselContainer films={trending} />
+        <FilmCarouselContainer films={trending} />
+        <FilmCarouselContainer films={trending} />
+        <FilmCarouselContainer films={trending} />
+        <FilmCarouselContainer films={trending} />
+        <FilmCarouselContainer films={trending} />
+        <FilmCarouselContainer films={trending} />
       </TilesContainer>
     </HomeContainer>
   );
