@@ -4,13 +4,13 @@ import styled from '@emotion/styled';
 
 const FilmTileWrapper = styled.div`
   transition: transform 0.2s linear;
-  padding: 10px;
 
   &:hover {
-    transform: scale(1.15) translateX(0) !important;
+    transform: translateX(0) !important;
+    z-index: 2;
 
     & ~ ${() => FilmTileWrapper} {
-      transform: translateX(10%);
+      transform: translateX(5%);
     }
   }
 `;
@@ -22,6 +22,15 @@ const FilmCarouselInnerContainer = styled.div`
   overflow-x: scroll;
   height: 100%;
   transition: transform 0.2s linear;
+  pointer-events: none;
+
+  &:hover {
+    pointer-events: auto;
+
+    ${FilmTileWrapper} {
+      transform: translateX(-5%);
+    }
+  }
 `;
 
 const FilmCarouselContainer = styled.div`
@@ -30,14 +39,6 @@ const FilmCarouselContainer = styled.div`
   margin: 20px;
   max-height: 100%;
   pointer-events: none;
-
-  &:hover {
-    pointer-events: auto;
-
-    ${FilmTileWrapper} {
-      transform: translateX(-10%);
-    }
-  }
 
   &.showTileMeta {
     z-index: 2;

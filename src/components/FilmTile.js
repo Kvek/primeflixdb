@@ -60,7 +60,7 @@ const FilmTileWrapper = styled.div`
   height: 147px;
   min-width: 250px;
   min-height: 147px;
-  transition: transform 0.25s linear 0.1s,
+  transition: transform 0.25s linear 0s,
     max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
   margin: 10px 5px;
   cursor: pointer;
@@ -88,12 +88,12 @@ const FilmTileWrapper = styled.div`
   }
 
   &:hover {
-    transform: scale(1.05);
-    transition: transform 0.25s linear 0s;
+    transform: scale(1.1);
+    transition: transform 0.2s linear 0s;
   }
 
   &.showMeta {
-    transform: scale(1.05) translateY(0%);
+    transform: scale(1.1) translateY(0%);
     transition: max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0s;
 
     @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
