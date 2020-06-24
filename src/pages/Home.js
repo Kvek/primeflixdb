@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { useRecoilValue } from 'recoil';
 
 import styled from '@emotion/styled';
 
 import trendingFilms from '@app/src/atoms/trendingFilms.atom';
 import appConfig from '@app/src/atoms/appConfig.atom';
-import FilmCarousel from '@app/src/components/FilmCarousel';
 import BackdropImage from '@app/src/components/BackdropImage';
 
 const HomeContainer = styled.div`
@@ -20,23 +19,6 @@ const HomeContainer = styled.div`
   margin-top: 55px;
 `;
 
-const Carousel = styled.div``;
-
-const TileContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-
-  ${Carousel} {
-    &:nth-last-of-type(1) {
-      .showMeta {
-        padding-bottom: 200px;
-      }
-    }
-  }
-`;
-
 const Home = () => {
   const trending = useRecoilValue(trendingFilms);
   const config = useRecoilValue(appConfig);
@@ -46,17 +28,6 @@ const Home = () => {
   return (
     <HomeContainer>
       <BackdropImage baseUrl={secure_base_url} films={trending} />
-      <TileContainer>
-        <Carousel>
-          <FilmCarousel films={trending} />
-        </Carousel>
-        <Carousel>
-          <FilmCarousel films={trending} />
-        </Carousel>
-        <Carousel>
-          <FilmCarousel films={trending} />
-        </Carousel>
-      </TileContainer>
     </HomeContainer>
   );
 };
