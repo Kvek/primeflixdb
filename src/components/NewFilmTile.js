@@ -24,10 +24,9 @@ const FilmTileWrapper = styled.div`
 
   svg {
     opacity: 0;
-    width: 80px;
-    height: 15px;
-    transition: opacity 0.2s linear;
-    margin: 10px;
+    height: 10px;
+    transition: opacity 0.2s linear, margin-bottom 0.2s linear;
+    padding: 10px;
     color: ${(props) => props.theme.colors.white};
   }
 
@@ -36,11 +35,9 @@ const FilmTileWrapper = styled.div`
 
     svg {
       opacity: 1;
-      transition: margin 0.2s linear, opacity 0.2s linear 0.3;
 
       &:hover {
-        transition: margin 0.2s linear;
-        margin-bottom: 5px;
+        margin-bottom: -5px;
       }
     }
   }
@@ -68,23 +65,6 @@ const NewFilmTile = ({ film, setShowTileMeta }) => {
           }}
         />
       </FilmTileWrapper>
-      <div>
-        {showMeta && (
-          <YouTube
-            // onReady={(event) => event.target.playVideo()}
-            onEnd={() => showMeta && setShowMeta(false)}
-            containerClassName='youtubeContainer'
-            modestbranding={1}
-            videoId={'9W0H0qJPIPQ'}
-            opts={{
-              playerVars: {
-                controls: 0,
-                rel: 0,
-              },
-            }}
-          />
-        )}
-      </div>
     </>
   );
 };

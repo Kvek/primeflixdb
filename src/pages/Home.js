@@ -20,6 +20,14 @@ const HomeContainer = styled.div`
   margin-top: 55px;
 `;
 
+const TilesContainer = styled.div`
+  margin-top: 500px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  height: 100%;
+`;
+
 const Home = () => {
   const trending = useRecoilValue(trendingFilms);
   const config = useRecoilValue(appConfig);
@@ -29,7 +37,17 @@ const Home = () => {
   return (
     <HomeContainer>
       <BackdropImage baseUrl={secure_base_url} films={trending} />
-      <NewFilmCarousel films={trending} />
+      <TilesContainer>
+        <NewFilmCarousel films={trending} />
+        <NewFilmCarousel films={trending} />
+        <NewFilmCarousel films={trending} />
+        <NewFilmCarousel films={trending} />
+        <NewFilmCarousel films={trending} />
+        <NewFilmCarousel films={trending} />
+        <NewFilmCarousel films={trending} />
+        <NewFilmCarousel films={trending} />
+        <NewFilmCarousel films={trending} />
+      </TilesContainer>
     </HomeContainer>
   );
 };

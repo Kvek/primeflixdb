@@ -8,7 +8,7 @@ const BackdropImageContainer = styled.div`
   background-image: url(${(props) => props.image});
   background-repeat: no-repeat;
   background-position: center;
-  position: relative;
+  position: absolute;
   background-size: cover;
   transition: all 0.5s linear;
 
@@ -16,6 +16,12 @@ const BackdropImageContainer = styled.div`
     height: 650px;
     background-size: cover;
   }
+`;
+
+const BackdropGradientContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
 `;
 
 const BackdropGradient = styled.div`
@@ -68,7 +74,9 @@ const BackdropImage = ({ films, baseUrl }) => {
     <BackdropImageContainer
       image={`${baseUrl}original${films[current]?.backdrop_path}`}
     >
-      <BackdropGradient />
+      <BackdropGradientContainer>
+        <BackdropGradient />
+      </BackdropGradientContainer>
     </BackdropImageContainer>
   );
 };

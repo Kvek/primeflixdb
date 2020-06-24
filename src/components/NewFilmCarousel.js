@@ -74,6 +74,11 @@ const CarouselInnerContainer = styled.div`
   height: 100%;
   padding-left: 50px;
   pointer-events: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   &:hover {
     &.isHovered {
