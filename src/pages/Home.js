@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import trendingFilms from '@app/src/atoms/trendingFilms.atom';
 import appConfig from '@app/src/atoms/appConfig.atom';
 import BackdropImage from '@app/src/components/BackdropImage';
+import NewFilmCarousel from '../components/NewFilmCarousel';
 
 const HomeContainer = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ const Home = () => {
   return (
     <HomeContainer>
       <BackdropImage baseUrl={secure_base_url} films={trending} />
+      <NewFilmCarousel films={trending} />
     </HomeContainer>
   );
 };

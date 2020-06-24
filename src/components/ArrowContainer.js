@@ -7,7 +7,6 @@ const Container = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -16,6 +15,21 @@ const Container = styled.div`
   color: ${(props) => props.theme.colors.white};
   width: ${(props) => props.width ?? '50px'};
   z-index: 3;
+  pointer-events: auto;
+
+  svg {
+    cursor: pointer;
+    transition: transform 0.2s linear, padding-right 0.2s linear,
+      padding-left 0.2s linear;
+
+    &:hover {
+      padding-left: 10px;
+
+      &.right {
+        padding-right: 10px;
+      }
+    }
+  }
 
   &.left {
     left: 0;

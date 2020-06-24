@@ -11,7 +11,6 @@ const FilmTileWrapper = styled.div`
   width: 250px;
   height: 147px;
   min-width: 250px;
-  margin: 0 5px;
   transition: transform 0.25s linear 0s,
     max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
   box-shadow: rgba(0, 0, 0, 0.25) -1px 3px 8px 0px;
@@ -33,7 +32,7 @@ const FilmTileWrapper = styled.div`
   }
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.15);
 
     svg {
       opacity: 1;
