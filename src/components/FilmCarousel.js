@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import NewFilmTile from '@app/src/components/NewFilmTile';
+import FilmTile from '@app/src/components/FilmTile';
 import ArrowContainer from '@app/src/components/ArrowContainer';
 
 const ArrowLeftWrapper = styled.div`
@@ -88,7 +88,7 @@ const CarouselInnerContainer = styled.div`
   }
 `;
 
-const NewFilmCarousel = ({ films }) => {
+const FilmCarousel = ({ films }) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <CarouselContainer className={isHovered && 'isHovered'}>
@@ -103,7 +103,7 @@ const NewFilmCarousel = ({ films }) => {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              <NewFilmTile film={film} setShowTileMeta={() => {}} />
+              <FilmTile film={film} setShowTileMeta={() => {}} />
             </TileWrapper>
           );
         })}
@@ -115,4 +115,4 @@ const NewFilmCarousel = ({ films }) => {
   );
 };
 
-export default NewFilmCarousel;
+export default FilmCarousel;

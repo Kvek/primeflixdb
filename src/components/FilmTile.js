@@ -43,7 +43,7 @@ const FilmTileWrapper = styled.div`
   }
 `;
 
-const NewFilmTile = ({ film, setShowTileMeta }) => {
+const FilmTile = ({ film, setShowTileMeta }) => {
   const { backdrop_path } = film;
   const [showMeta, setShowMeta] = useState(false);
 
@@ -69,4 +69,4 @@ const NewFilmTile = ({ film, setShowTileMeta }) => {
   );
 };
 
-export default NewFilmTile;
+export default FilmTile;
