@@ -68,7 +68,7 @@ const App = () => {
     });
 
     getTrending().then((res) => {
-      let newData = res?.data?.results.slice(0, 5).map(async (film) => {
+      let newData = res?.data?.results.map(async (film) => {
         const { media_type, id } = film;
         let videoData = [];
 

@@ -59,9 +59,10 @@ const TileWrapper = styled.div`
   pointer-events: none;
   cursor: pointer;
   padding: 0 5px;
+  scroll-snap-align: center;
 
   &:nth-last-of-type(1) {
-    padding-right: 60px;
+    padding-right: 50px;
   }
 `;
 
@@ -70,11 +71,11 @@ const CarouselInnerContainer = styled.div`
   align-items: center;
   overflow: hidden;
   overflow-x: scroll;
-  width: calc(100% + 50px);
   height: 100%;
   padding-left: 50px;
   pointer-events: auto;
   scrollbar-width: none;
+  scroll-snap-type: x mandatory;
 
   &::-webkit-scrollbar {
     display: none;
