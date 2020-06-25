@@ -59,7 +59,6 @@ const TileWrapper = styled.div`
   pointer-events: none;
   cursor: pointer;
   padding: 0 5px;
-  scroll-snap-align: center;
 
   &:nth-last-of-type(1) {
     padding-right: 60px;
@@ -75,7 +74,6 @@ const CarouselInnerContainer = styled.div`
   padding-left: 50px;
   pointer-events: auto;
   scrollbar-width: none;
-  scroll-snap-type: x mandatory;
 
   &::-webkit-scrollbar {
     display: none;
@@ -91,6 +89,7 @@ const CarouselInnerContainer = styled.div`
 
 const FilmCarousel = ({ films }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
   const carouselContainer = useRef(null);
   let scrollEventListener;
 
@@ -98,9 +97,13 @@ const FilmCarousel = ({ films }) => {
     carouselContainer.current.addEventListener('scroll', () => {
       clearInterval(scrollEventListener);
 
+      if (!isScrolling) {
+        setIsScrolling(true);
+      }
+
       scrollEventListener = setTimeout(() => {
-        console.log('scrolled');
-      }, 1000);
+        setIsScrolling(false);
+      }, 500);
     });
 
     return () => {
@@ -124,7 +127,11 @@ const FilmCarousel = ({ films }) => {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              <FilmTile film={film} setShowTileMeta={() => {}} />
+              <FilmTile
+                film={film}
+                setShowTileMeta={() => {}}
+                isScrolling={isScrolling}
+              />
             </TileWrapper>
           );
         })}

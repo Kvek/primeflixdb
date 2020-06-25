@@ -21,7 +21,7 @@ const HomeContainer = styled.div`
 `;
 
 const TilesContainer = styled.div`
-  margin-top: 500px;
+  margin-top: 450px;
   display: flex;
   flex-direction: column;
   z-index: 1;

@@ -11,7 +11,7 @@ const FilmTileWrapper = styled.div`
   width: 250px;
   height: 147px;
   min-width: 250px;
-  transition: transform 0.25s linear 0s,
+  transition: transform 0.2s linear,
     max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
   box-shadow: rgba(0, 0, 0, 0.25) -1px 3px 8px 0px;
   cursor: pointer;
@@ -31,7 +31,8 @@ const FilmTileWrapper = styled.div`
   }
 
   &:hover {
-    transform: scale(1.15);
+    transform: ${(props) => !props.isScrolling && 'scale(1.15)'};
+    z-index: 1;
 
     svg {
       opacity: 1;
@@ -43,7 +44,7 @@ const FilmTileWrapper = styled.div`
   }
 `;
 
-const FilmTile = ({ film, setShowTileMeta }) => {
+const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
   const { backdrop_path } = film;
   const [showMeta, setShowMeta] = useState(false);
 
@@ -57,6 +58,7 @@ const FilmTile = ({ film, setShowTileMeta }) => {
         bgImage={
           backdrop_path && `https://image.tmdb.org/t/p/w500/${backdrop_path}`
         }
+        isScrolling={isScrolling}
       >
         <ChevronDown
           onClick={() => {

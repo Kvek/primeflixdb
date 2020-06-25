@@ -30,7 +30,7 @@ const BackdropGradient = styled.div`
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -120px;
 
   background-image: linear-gradient(
     rgba(20, 20, 20, 0) 0,
