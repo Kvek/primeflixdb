@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import FilmTile from '@app/src/components/FilmTile';
 import ArrowContainer from '@app/src/components/ArrowContainer';
@@ -62,7 +62,7 @@ const TileWrapper = styled.div`
   scroll-snap-align: center;
 
   &:nth-last-of-type(1) {
-    padding-right: 50px;
+    padding-right: 60px;
   }
 `;
 
@@ -91,12 +91,32 @@ const CarouselInnerContainer = styled.div`
 
 const FilmCarousel = ({ films }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const carouselContainer = useRef(null);
+  let scrollEventListener;
+
+  useEffect(() => {
+    carouselContainer.current.addEventListener('scroll', () => {
+      clearInterval(scrollEventListener);
+
+      scrollEventListener = setTimeout(() => {
+        console.log('scrolled');
+      }, 1000);
+    });
+
+    return () => {
+      carouselContainer.removeEventListener('scroll');
+    };
+  }, [carouselContainer]);
+
   return (
     <CarouselContainer className={isHovered && 'isHovered'}>
       <ArrowLeftWrapper>
         <ArrowContainer />
       </ArrowLeftWrapper>
-      <CarouselInnerContainer className={isHovered && 'isHovered'}>
+      <CarouselInnerContainer
+        className={isHovered && 'isHovered'}
+        ref={carouselContainer}
+      >
         {films.map((film) => {
           return (
             <TileWrapper
