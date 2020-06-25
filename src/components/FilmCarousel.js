@@ -59,9 +59,20 @@ const TileWrapper = styled.div`
   pointer-events: none;
   cursor: pointer;
   padding: 0 5px;
+  transition: transform 0.2s linear;
 
   &:nth-last-of-type(1) {
     padding-right: 60px;
+  }
+
+  &:hover {
+    &.isHovered {
+      transform: translateX(0%) !important;
+
+      & ~ ${() => TileWrapper} {
+        transform: translateX(10%) !important;
+      }
+    }
   }
 `;
 
@@ -83,6 +94,12 @@ const CarouselInnerContainer = styled.div`
     &.isHovered {
       padding-top: 30px;
       padding-bottom: 30px;
+
+      ${TileWrapper} {
+        &.isHovered {
+          transform: translateX(-10%);
+        }
+      }
     }
   }
 `;
@@ -126,6 +143,7 @@ const FilmCarousel = ({ films }) => {
               key={film.id}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
+              className={!isScrolling && isHovered && 'isHovered'}
             >
               <FilmTile
                 film={film}
