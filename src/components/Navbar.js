@@ -88,7 +88,7 @@ const SearchContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 4;
-  margin-right: 1%;
+  /* margin-right: 1%; */
 `;
 
 const LoginContainer = styled.div`
