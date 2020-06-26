@@ -2,14 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import FilmTile from '@app/src/components/FilmTile';
 import ArrowContainer from '@app/src/components/ArrowContainer';
+import LoadingTileGroup from '@app/src/components/LoadingTileGroup';
 
 const ArrowLeftWrapper = styled.div`
   position: absolute;
-  display: flex;
+  display: ${(props) => (props.isLoading ? 'none' : 'flex')};
   align-items: center;
   justify-content: center;
   width: 50px;
-  height: 100%;
+  height: calc(100% - 10px);
   left: 0;
   opacity: 0;
   pointer-events: none;
@@ -18,9 +19,9 @@ const ArrowLeftWrapper = styled.div`
 
 const ArrowRightWrapper = styled.div`
   position: absolute;
-  display: flex;
+  display: ${(props) => (props.isLoading ? 'none' : 'flex')};
   width: 50px;
-  height: 100%;
+  height: calc(100% - 10px);
   right: 0;
   opacity: 0;
   pointer-events: none;
@@ -85,6 +86,7 @@ const CarouselInnerContainer = styled.div`
   padding-left: 50px;
   pointer-events: auto;
   scrollbar-width: none;
+  width: 100%;
 
   &::-webkit-scrollbar {
     display: none;
@@ -105,56 +107,76 @@ const CarouselInnerContainer = styled.div`
 `;
 
 const FilmCarousel = ({ films }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
   const carouselContainer = useRef(null);
   let scrollEventListener;
+  let carouselScrollListener;
 
   useEffect(() => {
-    carouselContainer.current.addEventListener('scroll', () => {
-      clearInterval(scrollEventListener);
+    if (films) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(true);
+    }
+  }, [films]);
 
-      if (!isScrolling) {
-        setIsScrolling(true);
-      }
+  useEffect(() => {
+    if (!isLoading) {
+      carouselContainer.current.addEventListener(
+        'scroll',
+        (carouselScrollListener = () => {
+          clearInterval(scrollEventListener);
 
-      scrollEventListener = setTimeout(() => {
-        setIsScrolling(false);
-      }, 500);
-    });
+          if (!isScrolling) {
+            setIsScrolling(true);
+          }
 
-    return () => {
-      carouselContainer.removeEventListener('scroll');
-    };
-  }, [carouselContainer]);
+          scrollEventListener = setTimeout(() => {
+            setIsScrolling(false);
+          }, 500);
+        })
+      );
+
+      return () => {
+        carouselContainer.current.removeEventListener(
+          'scroll',
+          carouselScrollListener
+        );
+      };
+    }
+  }, [isLoading]);
+
+  const filmsGroup = films.map((film) => {
+    return (
+      <TileWrapper
+        key={film.id}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={!isScrolling && isHovered && 'isHovered'}
+      >
+        <FilmTile
+          film={film}
+          setShowTileMeta={() => {}}
+          isScrolling={isScrolling}
+        />
+      </TileWrapper>
+    );
+  });
 
   return (
     <CarouselContainer className={isHovered && 'isHovered'}>
-      <ArrowLeftWrapper>
+      <ArrowLeftWrapper isLoading={isLoading}>
         <ArrowContainer />
       </ArrowLeftWrapper>
       <CarouselInnerContainer
         className={isHovered && 'isHovered'}
         ref={carouselContainer}
       >
-        {films.map((film) => {
-          return (
-            <TileWrapper
-              key={film.id}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              className={!isScrolling && isHovered && 'isHovered'}
-            >
-              <FilmTile
-                film={film}
-                setShowTileMeta={() => {}}
-                isScrolling={isScrolling}
-              />
-            </TileWrapper>
-          );
-        })}
+        {isLoading ? <LoadingTileGroup count={5} /> : filmsGroup}
       </CarouselInnerContainer>
-      <ArrowRightWrapper>
+      <ArrowRightWrapper isLoading={isLoading}>
         <ArrowContainer isRight />
       </ArrowRightWrapper>
     </CarouselContainer>
