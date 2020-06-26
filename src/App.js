@@ -39,7 +39,7 @@ const AppContainer = styled.div`
   flex-direction: column;
   margin: 0;
   padding: 0;
-  background: ${(props) => props.theme.colors.app};
+  background: ${(props) => props.theme.colors.background};
   position: relative;
 
   &::-webkit-scrollbar {
