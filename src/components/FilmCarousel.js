@@ -116,7 +116,7 @@ const FilmCarousel = ({ films }) => {
 
   useEffect(() => {
     if (films) {
-      setIsLoading(true);
+      setIsLoading(false);
     } else {
       setIsLoading(true);
     }

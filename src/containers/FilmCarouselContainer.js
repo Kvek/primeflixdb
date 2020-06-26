@@ -5,11 +5,29 @@ import FilmCarousel from '@app/src/components/FilmCarousel';
 
 const CarouselContainer = styled.div`
   margin: 25px 0;
+  display: flex;
+  flex-direction: column;
 `;
 
-const FilmCarouselContainer = ({ films }) => {
+const CarouselTitle = styled.div`
+  width: 100%;
+  display: flex;
+  padding: 10px 50px;
+
+  h3 {
+    font-size: 25px;
+    margin: 0;
+    text-transform: uppercase;
+    color: ${(props) => props.theme.colors.white};
+  }
+`;
+
+const FilmCarouselContainer = ({ films, title }) => {
   return (
     <CarouselContainer>
+      <CarouselTitle>
+        <h3>{title}</h3>
+      </CarouselTitle>
       <FilmCarousel films={films} />
     </CarouselContainer>
   );
