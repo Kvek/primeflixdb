@@ -72,7 +72,9 @@ const BackdropImage = ({ films, baseUrl }) => {
 
   return (
     <BackdropImageContainer
-      image={`${baseUrl}original${films[current]?.backdrop_path}`}
+      image={
+        films[current] && `${baseUrl}original${films[current]?.backdrop_path}`
+      }
     >
       <BackdropGradientContainer>
         <BackdropGradient />
