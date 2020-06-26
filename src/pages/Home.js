@@ -26,6 +26,7 @@ const TilesContainer = styled.div`
   flex-direction: column;
   z-index: 1;
   height: 100%;
+  overflow: hidden;
 `;
 
 const Home = () => {
