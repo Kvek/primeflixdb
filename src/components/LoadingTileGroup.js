@@ -6,20 +6,24 @@ import TileLoader from '@app/src/components/TileLoader';
 const LoadingTileGroupContainer = styled.div`
   display: flex;
   width: 100%;
-  justify-content: flex-start;
-  overflow: scroll;
+`;
+
+const Tile = styled.div`
+  display: block;
 `;
 
 const LoadingTileGroup = ({ count }) => {
   let groupItems = [];
 
   for (let i = 0; i < count; i++) {
-    groupItems.push(<TileLoader key={i} />);
+    groupItems.push(<TileLoader />);
   }
 
   return (
     <LoadingTileGroupContainer>
-      {groupItems.map((tile) => tile)}
+      {groupItems.map((tile, index) => (
+        <Tile key={index}>{tile}</Tile>
+      ))}
     </LoadingTileGroupContainer>
   );
 };
