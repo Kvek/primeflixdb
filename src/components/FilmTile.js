@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import YouTube from 'react-youtube';
 import { ChevronDown } from '@app/src/assets';
@@ -49,22 +49,21 @@ const FilmTileWrapper = styled.div`
 const FilmTileMetaContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background: red;
+  background: ${(props) => props.theme.colors.background};
   position: absolute;
   opacity: 0;
   transition: opacity 0.2s linear;
+  border-radius: 5px;
 `;
 
 const MetaVideo = styled.div`
   display: flex;
-  background: maroon;
   width: 100%;
   height: 200px;
 `;
 
 const MetaContent = styled.div`
   display: flex;
-  background: gold;
   width: 100%;
   height: 130px;
 `;
@@ -83,6 +82,7 @@ const Container = styled.div`
     margin-left: -35px;
     margin-right: -35px;
     box-shadow: rgba(0, 0, 0, 0.25) 0 0 10px 3px;
+    z-index: 3;
 
     ${FilmTileMetaContainer} {
       z-index: 2;
@@ -97,7 +97,6 @@ const Container = styled.div`
     height: 147px;
 
     ${FilmTileMetaContainer} {
-      z-index: 1;
       width: 0;
       height: 0;
       opacity: 0;

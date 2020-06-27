@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import FilmCarousel from '@app/src/components/FilmCarousel';
 
 const CarouselContainer = styled.div`
-  margin: 25px 0;
+  margin: 15px 0;
   display: flex;
   flex-direction: column;
 `;
@@ -12,7 +12,7 @@ const CarouselContainer = styled.div`
 const CarouselTitle = styled.div`
   width: 100%;
   display: flex;
-  padding: 10px 50px;
+  padding: 15px 50px;
 
   h3 {
     font-size: 25px;
@@ -26,7 +26,7 @@ const FilmCarouselContainer = ({ films, title }) => {
   return (
     <CarouselContainer>
       <CarouselTitle>
-        <h3>{title}</h3>
+        <h3>{'title'}</h3>
       </CarouselTitle>
       <FilmCarousel films={films} />
     </CarouselContainer>

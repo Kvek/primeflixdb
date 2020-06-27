@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import classnames from 'classnames';
 import styled from '@emotion/styled';
 import FilmTile from '@app/src/components/FilmTile';
 import ArrowContainer from '@app/src/components/ArrowContainer';
@@ -11,6 +12,7 @@ const ArrowLeftWrapper = styled.div`
   justify-content: center;
   width: 50px;
   height: calc(100% - 10px);
+  max-height: 147px;
   left: 0;
   opacity: 0;
   pointer-events: none;
@@ -22,6 +24,7 @@ const ArrowRightWrapper = styled.div`
   display: ${(props) => (props.isLoading ? 'none' : 'flex')};
   width: 50px;
   height: calc(100% - 10px);
+  max-height: 147px;
   right: 0;
   opacity: 0;
   pointer-events: none;
@@ -35,8 +38,12 @@ const CarouselContainer = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  margin: 10px 0;
   pointer-events: none;
+
+  &.showMeta {
+    margin-top: -91px;
+    margin-bottom: -91px;
+  }
 
   &:hover {
     ${ArrowLeftWrapper}, ${ArrowRightWrapper} {
@@ -44,8 +51,8 @@ const CarouselContainer = styled.div`
     }
 
     &.isHovered {
-      margin-top: -20px;
-      margin-bottom: -20px;
+      margin-top: -30px;
+      margin-bottom: -30px;
 
       ${ArrowLeftWrapper}, ${ArrowRightWrapper} {
         height: calc(100% - 60px);
@@ -110,6 +117,7 @@ const FilmCarousel = ({ films }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [showMeta, setShowMeta] = useState(false);
   const carouselContainer = useRef(null);
   let scrollEventListener;
   let carouselScrollListener;
@@ -154,11 +162,14 @@ const FilmCarousel = ({ films }) => {
         key={film.id}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={!isScrolling && isHovered && 'isHovered'}
+        className={classnames(
+          !isScrolling && isHovered && !showMeta && 'isHovered',
+          showMeta && 'showMeta'
+        )}
       >
         <FilmTile
           film={film}
-          setShowTileMeta={() => {}}
+          setShowTileMeta={(status) => setShowMeta(status)}
           isScrolling={isScrolling}
         />
       </TileWrapper>
@@ -166,12 +177,17 @@ const FilmCarousel = ({ films }) => {
   });
 
   return (
-    <CarouselContainer className={isHovered && 'isHovered'}>
+    <CarouselContainer
+      className={classnames(
+        isHovered && !showMeta && 'isHovered',
+        showMeta && 'showMeta'
+      )}
+    >
       <ArrowLeftWrapper isLoading={isLoading}>
         <ArrowContainer />
       </ArrowLeftWrapper>
       <CarouselInnerContainer
-        className={isHovered && 'isHovered'}
+        className={isHovered && !showMeta && 'isHovered'}
         ref={carouselContainer}
       >
         {isLoading ? <LoadingTileGroup count={5} /> : filmsGroup}
