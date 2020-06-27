@@ -21,6 +21,7 @@ const FilmTileWrapper = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  z-index: 1;
 
   svg {
     opacity: 0;
@@ -44,16 +45,59 @@ const FilmTileWrapper = styled.div`
   }
 `;
 
+const FilmTileMetaContainer = styled.div`
+  display: flex;
+  background: red;
+  position: absolute;
+  transition: all 0.2s linear;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: min-width 0.2s linear, min-height 0.2s linear;
+
+  &.showMeta {
+    min-width: 350px;
+    min-height: 441px;
+
+    ${FilmTileMetaContainer} {
+      z-index: 2;
+      width: 350px;
+      height: 440px;
+    }
+  }
+
+  &.hideMeta {
+    min-width: 250px;
+    min-height: 147px;
+
+    ${FilmTileMetaContainer} {
+      z-index: 1;
+      width: 0;
+      height: 0;
+      transition: all x2s linear;
+    }
+  }
+`;
+
 const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
   const { backdrop_path } = film;
   const [showMeta, setShowMeta] = useState(false);
 
   return (
-    <>
+    <Container className={showMeta ? 'showMeta' : ' hideMeta'}>
       <FilmTileWrapper
-        onMouseLeave={() => {
-          setShowMeta(false);
-          setShowTileMeta(false);
+        // onMouseLeave={() => {
+        //   setShowMeta(false);
+        //   setShowTileMeta(false);
+        // }}
+        onClick={() => {
+          setShowMeta(!showMeta);
+          setShowTileMeta(true);
         }}
         bgImage={
           backdrop_path && `https://image.tmdb.org/t/p/w500/${backdrop_path}`
@@ -67,7 +111,11 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
           }}
         />
       </FilmTileWrapper>
-    </>
+      <FilmTileMetaContainer>
+        {/* <MetaVideo></MetaVideo>
+        <MetaContent></MetaContent> */}
+      </FilmTileMetaContainer>
+    </Container>
   );
 };
 
