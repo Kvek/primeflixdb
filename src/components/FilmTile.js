@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import YouTube from 'react-youtube';
 import { ChevronDown } from '@app/src/assets';
@@ -15,13 +15,13 @@ const FilmTileWrapper = styled.div`
     max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
   box-shadow: rgba(0, 0, 0, 0.25) -1px 3px 8px 0px;
   cursor: pointer;
-  pointer-events: auto;
   overflow: hidden;
   background-image: url(${(props) => props.bgImage});
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 1;
+  pointer-events: auto;
 
   svg {
     opacity: 0;
@@ -29,6 +29,7 @@ const FilmTileWrapper = styled.div`
     transition: opacity 0.2s linear, margin-bottom 0.2s linear;
     padding: 10px;
     color: ${(props) => props.theme.colors.white};
+    pointer-events: auto;
   }
 
   &:hover {
@@ -47,9 +48,25 @@ const FilmTileWrapper = styled.div`
 
 const FilmTileMetaContainer = styled.div`
   display: flex;
+  flex-direction: column;
   background: red;
   position: absolute;
-  transition: all 0.2s linear;
+  opacity: 0;
+  transition: opacity 0.2s linear;
+`;
+
+const MetaVideo = styled.div`
+  display: flex;
+  background: maroon;
+  width: 100%;
+  height: 200px;
+`;
+
+const MetaContent = styled.div`
+  display: flex;
+  background: gold;
+  width: 100%;
+  height: 130px;
 `;
 
 const Container = styled.div`
@@ -58,28 +75,32 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  transition: min-width 0.2s linear, min-height 0.2s linear;
+  pointer-events: auto;
 
   &.showMeta {
-    min-width: 350px;
-    min-height: 441px;
+    width: 320px;
+    min-height: 330px;
+    margin-left: -35px;
+    margin-right: -35px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 0 10px 3px;
 
     ${FilmTileMetaContainer} {
       z-index: 2;
-      width: 350px;
-      height: 440px;
+      width: 100%;
+      height: 100%;
+      opacity: 1;
     }
   }
 
   &.hideMeta {
-    min-width: 250px;
-    min-height: 147px;
+    width: 250px;
+    height: 147px;
 
     ${FilmTileMetaContainer} {
       z-index: 1;
       width: 0;
       height: 0;
-      transition: all x2s linear;
+      opacity: 0;
     }
   }
 `;
@@ -89,31 +110,31 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
   const [showMeta, setShowMeta] = useState(false);
 
   return (
-    <Container className={showMeta ? 'showMeta' : ' hideMeta'}>
+    <Container
+      className={showMeta ? 'showMeta' : ' hideMeta'}
+      onMouseLeave={() => {
+        setShowMeta(false);
+        setShowTileMeta(false);
+      }}
+    >
       <FilmTileWrapper
-        // onMouseLeave={() => {
-        //   setShowMeta(false);
-        //   setShowTileMeta(false);
-        // }}
-        onClick={() => {
-          setShowMeta(!showMeta);
-          setShowTileMeta(true);
-        }}
         bgImage={
           backdrop_path && `https://image.tmdb.org/t/p/w500/${backdrop_path}`
         }
         isScrolling={isScrolling}
       >
-        <ChevronDown
+        <span
           onClick={() => {
             setShowMeta(true);
             setShowTileMeta(true);
           }}
-        />
+        >
+          <ChevronDown />
+        </span>
       </FilmTileWrapper>
       <FilmTileMetaContainer>
-        {/* <MetaVideo></MetaVideo>
-        <MetaContent></MetaContent> */}
+        <MetaVideo></MetaVideo>
+        <MetaContent></MetaContent>
       </FilmTileMetaContainer>
     </Container>
   );

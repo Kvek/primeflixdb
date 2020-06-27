@@ -15,7 +15,6 @@ const HomeContainer = styled.div`
   min-height: 100vh;
   height: 100%;
   position: relative;
-  overflow: scroll;
   background: ${(props) => props.theme.colors.background};
   margin-top: 55px;
 `;
@@ -24,9 +23,8 @@ const TilesContainer = styled.div`
   margin-top: 450px;
   display: flex;
   flex-direction: column;
-  z-index: 1;
+  z-index: 2;
   height: 100%;
-  overflow: hidden;
 `;
 
 const Home = () => {
