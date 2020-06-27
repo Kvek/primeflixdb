@@ -74,6 +74,8 @@ const TileWrapper = styled.div`
   }
 
   &:hover {
+    z-index: 3;
+
     &.isHovered {
       transform: translateX(0%) !important;
 
@@ -162,10 +164,7 @@ const FilmCarousel = ({ films }) => {
         key={film.id}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={classnames(
-          !isScrolling && isHovered && !showMeta && 'isHovered',
-          showMeta && 'showMeta'
-        )}
+        className={!isScrolling && isHovered && !showMeta && 'isHovered'}
       >
         <FilmTile
           film={film}
