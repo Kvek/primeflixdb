@@ -18,7 +18,7 @@ const NavbarContainer = styled.div`
   font-size: 16px;
   padding: 0 20px 0 0;
   margin: 0;
-  z-index: 2;
+  z-index: 3;
 
   a {
     text-decoration: none;
@@ -88,7 +88,6 @@ const SearchContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 4;
-  /* margin-right: 1%; */
 `;
 
 const LoginContainer = styled.div`
@@ -229,18 +228,9 @@ const Navbar = () => {
                 </Link>
               )}
             </Match>
-            <Match key={'trailers'} path={'/trailers'}>
+            <Match key={'watchlist'} path={'/watchlist'}>
               {({ match }) => (
-                <Link to='/trailers'>
-                  <NavListItems isActive={match !== null}>
-                    Trailers
-                  </NavListItems>
-                </Link>
-              )}
-            </Match>
-            <Match key={'playlists'} path={'/playlists'}>
-              {({ match }) => (
-                <Link to='/playlists'>
+                <Link to='/watchlist'>
                   <NavListItems isActive={match !== null}>
                     Playlists
                   </NavListItems>
