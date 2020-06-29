@@ -26,7 +26,7 @@ const FilmCarouselContainer = ({ films, title }) => {
   return (
     <CarouselContainer>
       <CarouselTitle>
-        <h3>{'title'}</h3>
+        <h3>{title}</h3>
       </CarouselTitle>
       <FilmCarousel films={films} />
     </CarouselContainer>

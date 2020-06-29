@@ -1,25 +1,15 @@
 import Axios from 'axios';
 
-const APIKey = 'b4ac50bea5731f7106812c256c1b3048';
-const baseURL = 'https://api.themoviedb.org/3';
-
-const params = { params: { api_key: APIKey } };
-
-const get = (url, param = {}) =>
-  Axios.get(`${baseURL}${url}`, { ...params, ...param });
-
-const post = (url, body) => Axios.post(`${baseURL}${url}`, params, { body });
-
-const put = (url) => Axios.put(`${baseURL}${url}`, params);
-
-const remove = (url) => Axios.delete(`${baseURL}${url}`, params);
+const get = (url, param = {}) => Axios.get(url, { ...param });
 
 // Endpoints
 
-export const getConfig = () => get('/configuration');
+export const getConfig = () => get('/config');
 
-export const getPopular = () => get('/movie/popular');
+export const getPopular = () => get('/popular');
 
-export const getTrending = () => get('/trending/all/week');
+export const getTrending = () => get('/trending');
 
-export const getMediaVideo = (media, id) => get(`/${media}/${id}/videos`);
+export const getNowPlaying = () => get('/now_playing');
+
+export const getMovies = () => get('/movies');

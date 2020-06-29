@@ -1,10 +1,15 @@
-import React from 'react';
-import { useRecoilValue } from 'recoil';
+import React, { useEffect } from 'react';
+import { useRecoilValue, useRecoilState } from 'recoil';
 
 import styled from '@emotion/styled';
 
+import { getMovies } from '@app/src/Api';
+
 import trendingFilms from '@app/src/atoms/trendingFilms.atom';
 import appConfig from '@app/src/atoms/appConfig.atom';
+import popularFilms from '@app/src/atoms/popularFilms.atom';
+import nowPlayingFilms from '@app/src/atoms/nowPlayingFilms.atom';
+
 import BackdropImage from '@app/src/components/BackdropImage';
 import FilmCarouselContainer from '@app/src/containers/FilmCarouselContainer';
 
@@ -28,8 +33,19 @@ const TilesContainer = styled.div`
 `;
 
 const Home = () => {
-  const trending = useRecoilValue(trendingFilms);
   const config = useRecoilValue(appConfig);
+
+  const [trending, setTrending] = useRecoilState(trendingFilms);
+  const [popular, setPopular] = useRecoilState(popularFilms);
+  const [nowPlaying, setNowPlaying] = useRecoilState(nowPlayingFilms);
+
+  useEffect(() => {
+    getMovies().then((res) => {
+      setPopular(res.data?.popular);
+      setTrending(res.data?.trending);
+      setNowPlaying(res.data?.now_playing);
+    });
+  }, []);
 
   const { secure_base_url } = config;
 
@@ -37,15 +53,9 @@ const Home = () => {
     <HomeContainer>
       <BackdropImage baseUrl={secure_base_url} films={trending} />
       <TilesContainer>
-        <FilmCarouselContainer films={trending} />
-        <FilmCarouselContainer films={trending} />
-        <FilmCarouselContainer films={trending} />
-        <FilmCarouselContainer films={trending} />
-        <FilmCarouselContainer films={trending} />
-        <FilmCarouselContainer films={trending} />
-        <FilmCarouselContainer films={trending} />
-        <FilmCarouselContainer films={trending} />
-        <FilmCarouselContainer films={trending} />
+        <FilmCarouselContainer films={popular} title='popular' />
+        <FilmCarouselContainer films={nowPlaying} title='Now playing' />
+        <FilmCarouselContainer films={trending} title='trending' />
       </TilesContainer>
     </HomeContainer>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useSetRecoilState } from 'recoil';
 import { ThemeProvider } from 'emotion-theming';
@@ -15,13 +15,12 @@ import {
 } from '@fortawesome/fontawesome-free-solid';
 import { Router } from '@reach/router';
 import theme from '@app/src/theme';
-import { getTrending, getMediaVideo, getConfig } from '@app/src/Api';
 
-import trendingFilms from '@app/src/atoms/trendingFilms.atom';
+import { getConfig } from '@app/src/Api';
+
 import appConfig from '@app/src/atoms/appConfig.atom';
 
 import Navbar from '@app/src/components/Navbar';
-
 import Films from '@app/src/pages/Films';
 import Home from '@app/src/pages/Home';
 import Tv from '@app/src/pages/Tv';
@@ -48,7 +47,6 @@ const AppContainer = styled.div`
 `;
 
 const App = () => {
-  const setTrending = useSetRecoilState(trendingFilms);
   const setAppConfig = useSetRecoilState(appConfig);
 
   useEffect(() => {
@@ -65,26 +63,6 @@ const App = () => {
 
     getConfig().then((res) => {
       setAppConfig(res?.data?.images);
-    });
-
-    getTrending().then((res) => {
-      let newData = res?.data?.results.map(async (film) => {
-        const { media_type, id } = film;
-        let videoData = [];
-
-        await getMediaVideo(media_type, id).then((res) => {
-          const data = {
-            ...film,
-            ...{ video: res?.data?.results[0] },
-          };
-          videoData = data;
-        });
-        return videoData;
-      });
-
-      Promise.all(newData).then((data) => {
-        setTrending(data);
-      });
     });
   }, []);
 
