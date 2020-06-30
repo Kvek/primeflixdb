@@ -36,7 +36,7 @@ const getTvFanArt = (id) =>
   Axios.get(`https://webservice.fanart.tv/v3/tv/${id}?api_key=d66c372c525322e8c23b39d2eeae3f67
 `);
 
-GEThttp: module.exports = {
+module.exports = {
   getConfig,
   getImdbId,
   getPopular,
