@@ -104,9 +104,28 @@ const Container = styled.div`
   }
 `;
 
+const formatFanArt = (art) => {
+  const fan_art = {
+    moviebackground:
+      art?.moviebackground
+        ?.filter((film) => film.lang === 'en' || film.lang === '')
+        .slice(0, 4) || null,
+    movieposter:
+      art?.movieposter?.filter((film) => film.lang === 'en')[0] || null,
+    hdmovieclearart:
+      art?.hdmovieclearart?.filter((film) => film.lang === 'en')[0] || null,
+    hdmovielogo:
+      art?.hdmovielogo?.filter((film) => film.lang === 'en')[0] || null,
+  };
+
+  return fan_art;
+};
+
 const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
+  const { fan_art } = film;
   const { backdrop_path } = film;
   const [showMeta, setShowMeta] = useState(false);
+  const newFanArt = formatFanArt(fan_art);
 
   return (
     <Container
