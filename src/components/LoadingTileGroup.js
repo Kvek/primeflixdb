@@ -6,6 +6,8 @@ import TileLoader from '@app/src/components/TileLoader';
 const LoadingTileGroupContainer = styled.div`
   display: flex;
   width: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Tile = styled.div`

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import LoadingTileGroup from '@app/src/components/LoadingTileGroup';
 
 import FilmCarousel from '@app/src/components/FilmCarousel';
 
@@ -28,7 +29,11 @@ const FilmCarouselContainer = ({ films, title }) => {
       <CarouselTitle>
         <h3>{title}</h3>
       </CarouselTitle>
-      <FilmCarousel films={films} />
+      {films.length ? (
+        <FilmCarousel films={films} />
+      ) : (
+        <LoadingTileGroup count={5} />
+      )}
     </CarouselContainer>
   );
 };

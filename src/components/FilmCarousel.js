@@ -125,7 +125,7 @@ const FilmCarousel = ({ films }) => {
   let carouselScrollListener;
 
   useEffect(() => {
-    if (films) {
+    if (films.length) {
       setIsLoading(false);
     } else {
       setIsLoading(true);
@@ -189,7 +189,26 @@ const FilmCarousel = ({ films }) => {
         className={isHovered && !showMeta && 'isHovered'}
         ref={carouselContainer}
       >
-        {isLoading ? <LoadingTileGroup count={5} /> : filmsGroup}
+        {films.map((film) => {
+          return (
+            film && (
+              <TileWrapper
+                key={film.id}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                className={
+                  !isScrolling && isHovered && !showMeta && 'isHovered'
+                }
+              >
+                <FilmTile
+                  film={film}
+                  setShowTileMeta={(status) => setShowMeta(status)}
+                  isScrolling={isScrolling}
+                />
+              </TileWrapper>
+            )
+          );
+        })}
       </CarouselInnerContainer>
       <ArrowRightWrapper isLoading={isLoading}>
         <ArrowContainer isRight />

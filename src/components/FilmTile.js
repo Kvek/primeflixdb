@@ -13,7 +13,6 @@ const FilmTileWrapper = styled.div`
   min-width: 250px;
   transition: transform 0.2s linear,
     max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
-  box-shadow: rgba(0, 0, 0, 0.25) -1px 3px 8px 0px;
   cursor: pointer;
   overflow: hidden;
   background-image: url(${(props) => props.bgImage});
@@ -34,6 +33,8 @@ const FilmTileWrapper = styled.div`
 
   &:hover {
     transform: ${(props) => !props.isScrolling && 'scale(1.15)'};
+    box-shadow: rgba(0, 0, 0, 0.25) -1px 3px 8px 0px;
+
     z-index: 1;
 
     svg {
@@ -131,10 +132,12 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
           <ChevronDown />
         </span>
       </FilmTileWrapper>
-      <FilmTileMetaContainer>
-        <MetaVideo></MetaVideo>
-        <MetaContent></MetaContent>
-      </FilmTileMetaContainer>
+      {showMeta && (
+        <FilmTileMetaContainer>
+          <MetaVideo></MetaVideo>
+          <MetaContent></MetaContent>
+        </FilmTileMetaContainer>
+      )}
     </Container>
   );
 };
