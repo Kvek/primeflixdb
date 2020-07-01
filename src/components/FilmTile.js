@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
-import styled from '@emotion/styled';
+import React, { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import YouTube from 'react-youtube';
+
+import styled from '@emotion/styled';
+
+import filmVideos from '@app/src/atoms/filmVideos.atom';
+
 import { ChevronDown } from '@app/src/assets';
+import { getVideo } from '@app/src/Api';
 
 const FilmTileWrapper = styled.div`
   display: flex;
@@ -21,6 +27,15 @@ const FilmTileWrapper = styled.div`
   background-size: cover;
   z-index: 1;
   pointer-events: auto;
+
+  &.metabackground {
+    min-width: 100%;
+    height: 100%;
+
+    &:hover {
+      transform: none;
+    }
+  }
 
   svg {
     opacity: 0;
@@ -61,6 +76,23 @@ const MetaVideo = styled.div`
   display: flex;
   width: 100%;
   height: 200px;
+
+  .youtubeContainer {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+    margin-bottom: 50px;
+  }
+
+  .youtubeContainer iframe {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 `;
 
 const MetaContent = styled.div`
@@ -90,6 +122,7 @@ const Container = styled.div`
       width: 100%;
       height: 100%;
       opacity: 1;
+      transition: opacity 0.2s linear;
     }
   }
 
@@ -101,13 +134,36 @@ const Container = styled.div`
       width: 0;
       height: 0;
       opacity: 0;
+      transition: opacity 0.2s linear;
     }
   }
 `;
 
 const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
-  const { backdrop_path } = film;
+  const { backdrop_path, id } = film;
   const [showMeta, setShowMeta] = useState(false);
+  const [videos, setFilmVideos] = useRecoilState(filmVideos(id));
+  const { results: filmTrailers } = videos;
+
+  const getVideoData = (id) => {
+    if (!Object.keys(videos).length) {
+      getVideo(id).then((res) => {
+        setFilmVideos(res.data);
+      });
+    }
+  };
+
+  const filterTrailer = () => {
+    if (filmTrailers) {
+      let trailers = filmTrailers.filter(
+        (trailer) => trailer.type === 'Trailer' || trailer.type === 'Teaser'
+      );
+
+      return (
+        trailers.find((trailer) => trailer.type === 'Trailer') ?? trailers[0]
+      );
+    }
+  };
 
   return (
     <Container
@@ -127,19 +183,37 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
           onClick={() => {
             setShowMeta(true);
             setShowTileMeta(true);
+            getVideoData(id);
           }}
         >
           <ChevronDown />
         </span>
       </FilmTileWrapper>
-      {showMeta && (
-        <FilmTileMetaContainer>
-          <MetaVideo></MetaVideo>
-          <MetaContent></MetaContent>
-        </FilmTileMetaContainer>
-      )}
+      <FilmTileMetaContainer>
+        <MetaVideo>
+          {Object.keys(videos).length && filterTrailer()?.key ? (
+            <YouTube
+              videoId={filterTrailer()?.key}
+              id={filterTrailer()?.id}
+              containerClassName='youtubeContainer'
+              opts={{
+                playerVars: { controls: 0, modestbranding: 1 },
+              }}
+            />
+          ) : (
+            <FilmTileWrapper
+              bgImage={
+                backdrop_path &&
+                `https://image.tmdb.org/t/p/w500/${backdrop_path}`
+              }
+              className='metabackground'
+            />
+          )}
+        </MetaVideo>
+        <MetaContent></MetaContent>
+      </FilmTileMetaContainer>
     </Container>
   );
 };
 
-export default FilmTile;
+export default React.memo(FilmTile);
