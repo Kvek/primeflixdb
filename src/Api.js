@@ -14,6 +14,11 @@ export const getNowPlaying = () => get('/now_playing');
 
 export const getMovies = () => get('/movies');
 
+export const getCertification = (id) =>
+  get('/certification', {
+    id: id,
+  });
+
 export const getVideo = (id) =>
   get('/video', {
     id: id,

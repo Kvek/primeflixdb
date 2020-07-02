@@ -28,6 +28,8 @@ const getMediaVideo = (media, id) => get(`/${media}/${id}/videos`);
 
 const getImdbId = (media, id) => get(`/${media}/${id}/external_ids`);
 
+const getCertification = (media, id) => get(`/${media}/${id}/release_dates`);
+
 const getMovieFanArt = (id) =>
   Axios.get(`https://webservice.fanart.tv/v3/movies/${id}?api_key=d66c372c525322e8c23b39d2eeae3f67
 `);
@@ -36,7 +38,7 @@ const getTvFanArt = (id) =>
   Axios.get(`https://webservice.fanart.tv/v3/tv/${id}?api_key=d66c372c525322e8c23b39d2eeae3f67
 `);
 
-GEThttp: module.exports = {
+module.exports = {
   getConfig,
   getImdbId,
   getPopular,
@@ -45,4 +47,5 @@ GEThttp: module.exports = {
   getNowPlaying,
   getMovieFanArt,
   getTvFanArt,
+  getCertification,
 };

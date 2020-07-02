@@ -30,21 +30,11 @@ router.get('/', async (req, res, next) => {
       let data = await getMovieFanArt(id);
       let art = await data.data;
 
-      const artData = {
-        moviebackground:
-          art.moviebackground
-            .filter((film) => film.lang === 'en' || film.lang === '')
-            .slice(0, 4) || null,
-        movieposter:
-          art.movieposter.filter((film) => film.lang === 'en')[0] || null,
-        hdmovieclearart:
-          art.hdmovieclearart.filter((film) => film.lang === 'en')[0] || null,
-        hdmovielogo:
-          art.hdmovielogo.filter((film) => film.lang === 'en')[0] || null,
-      };
+      delete art.moviedisc;
+      delete art.moviebanner;
 
-      return artData;
-    } catch (err) {
+      return art;
+    } catch (error) {
       return {};
     }
   };

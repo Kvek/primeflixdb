@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import filmVideos from '@app/src/atoms/filmVideos.atom';
 
 import { ChevronDown } from '@app/src/assets';
-import { getVideo } from '@app/src/Api';
+import { getVideo, getCertification } from '@app/src/Api';
 
 const FilmTileWrapper = styled.div`
   display: flex;
@@ -77,6 +77,7 @@ const FilmTileMetaContainer = styled.div`
 const MetaVideo = styled.div`
   display: flex;
   width: 100%;
+  min-height: 180px;
   background-image: url(${(props) => props.bgImage});
   background-position: center;
   background-repeat: no-repeat;
@@ -104,10 +105,11 @@ const MetaContent = styled.div`
   flex-direction: column;
   width: 100%;
   color: ${(props) => props.theme.colors.white};
+  min-height: calc(100% - 180px);
 
   h1 {
     font-size: 18px;
-    padding: 10px;
+    padding: 8px;
     margin: 0;
     cursor: pointer;
     overflow: hidden;
@@ -121,7 +123,7 @@ const MetaContent = styled.div`
     margin-bottom: 0;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 5;
     font-size: 13px;
     -webkit-box-orient: vertical;
     min-height: 56px;
@@ -174,6 +176,8 @@ const CtaContainer = styled.div`
   svg {
     margin: 5px;
     cursor: pointer;
+    width: 25px;
+    height: 25px;
   }
 `;
 
@@ -181,6 +185,7 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
   const { backdrop_path, id, title, overview, release_date } = film;
   const [showMeta, setShowMeta] = useState(false);
   const [videos, setFilmVideos] = useRecoilState(filmVideos(id));
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const { results: filmTrailers } = videos;
 
   const getVideoData = (id) => {
@@ -189,6 +194,13 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
         setFilmVideos(res.data);
       });
     }
+  };
+
+  const getRating = (id) => {
+    console.log(id);
+    getCertification(id).then((res) => {
+      console.log(res);
+    });
   };
 
   const filterTrailer = () => {
@@ -207,8 +219,8 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
     <Container
       className={showMeta ? 'showMeta' : ' hideMeta'}
       onMouseLeave={() => {
-        setShowMeta(false);
-        setShowTileMeta(false);
+        setShowMeta(true);
+        setShowTileMeta(true);
       }}
     >
       <FilmTileWrapper
@@ -222,6 +234,7 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
             setShowMeta(true);
             setShowTileMeta(true);
             getVideoData(id);
+            getRating(id);
           }}
         >
           <ChevronDown />
@@ -230,7 +243,9 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
       <FilmTileMetaContainer>
         <MetaVideo
           bgImage={
-            backdrop_path && `https://image.tmdb.org/t/p/w500/${backdrop_path}`
+            !isVideoReady
+              ? `https://image.tmdb.org/t/p/w500/${backdrop_path}`
+              : ''
           }
         >
           {Object.keys(videos).length && (
@@ -238,6 +253,7 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
               videoId={filterTrailer()?.key}
               id={filterTrailer()?.id}
               containerClassName='youtubeContainer'
+              onReady={() => setIsVideoReady(true)}
               opts={{
                 playerVars: { controls: 0, modestbranding: 1 },
               }}

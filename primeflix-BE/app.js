@@ -12,6 +12,7 @@ var getPopular = require('./routes/popular');
 var getTrending = require('./routes/trending');
 var getNowPlaying = require('./routes/now-playing');
 var getVideo = require('./routes/get-video');
+var getCertification = require('./routes/certification');
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use('/popular', getPopular);
 app.use('/trending', getTrending);
 app.use('/now_playing', getNowPlaying);
 app.use('/video', getVideo);
+app.use('/certification', getCertification);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
