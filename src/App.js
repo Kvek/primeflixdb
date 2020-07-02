@@ -12,6 +12,8 @@ import {
   faArrowAltCircleRight,
   faBars,
   faTimes,
+  faHeart,
+  faPlus,
 } from '@fortawesome/fontawesome-free-solid';
 import { Router } from '@reach/router';
 import theme from '@app/src/theme';
@@ -58,7 +60,9 @@ const App = () => {
       faUserCircle,
       faArrowAltCircleRight,
       faBars,
-      faTimes
+      faTimes,
+      faHeart,
+      faPlus
     );
 
     getConfig().then((res) => {
