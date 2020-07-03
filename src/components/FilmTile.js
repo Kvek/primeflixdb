@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import filmVideos from '@app/src/atoms/filmVideos.atom';
 
 import { ChevronDown } from '@app/src/assets';
-import { getVideo, getCertification } from '@app/src/Api';
+import { getVideo } from '@app/src/Api';
 
 import Ratings from '@app/src/components/Ratings';
 
@@ -208,7 +208,6 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
   const [showMeta, setShowMeta] = useState(false);
   const [videos, setFilmVideos] = useRecoilState(filmVideos(id));
   const [isVideoReady, setIsVideoReady] = useState(false);
-  const [rating, setRating] = useState(null);
   const { results: filmTrailers } = videos;
 
   const getVideoData = (id) => {
