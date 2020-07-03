@@ -10,6 +10,8 @@ import filmVideos from '@app/src/atoms/filmVideos.atom';
 import { ChevronDown } from '@app/src/assets';
 import { getVideo, getCertification } from '@app/src/Api';
 
+import Ratings from '@app/src/components/Ratings';
+
 const FilmTileWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -77,7 +79,7 @@ const FilmTileMetaContainer = styled.div`
 const MetaVideo = styled.div`
   display: flex;
   width: 100%;
-  min-height: 180px;
+  height: 180px;
   background-image: url(${(props) => props.bgImage});
   background-position: center;
   background-repeat: no-repeat;
@@ -105,11 +107,12 @@ const MetaContent = styled.div`
   flex-direction: column;
   width: 100%;
   color: ${(props) => props.theme.colors.white};
-  min-height: calc(100% - 180px);
+  height: 150px;
 
   h1 {
     font-size: 18px;
-    padding: 8px;
+    line-height: 18px;
+    padding: 6px 8px;
     margin: 0;
     cursor: pointer;
     overflow: hidden;
@@ -118,15 +121,16 @@ const MetaContent = styled.div`
   }
 
   p {
-    padding: 0 20px 0 10px;
+    padding: 0 10px 0;
     margin-top: 0;
     margin-bottom: 0;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 6;
     font-size: 13px;
-    -webkit-box-orient: vertical;
-    min-height: 56px;
+    line-height: 15px;
+    min-height: 90px;
+    max-height: 90px;
   }
 `;
 
@@ -170,14 +174,25 @@ const Container = styled.div`
 
 const CtaContainer = styled.div`
   display: flex;
+  align-items: center;
   padding: 0 10px;
   justify-content: flex-end;
+  max-height: 30px;
 
   svg {
-    margin: 5px;
-    cursor: pointer;
+    margin: 0 5px 5px 0;
     width: 25px;
     height: 25px;
+  }
+`;
+
+const FavouriteIconContainer = styled.div`
+  width: 100%;
+  text-align: right;
+
+  svg {
+    margin: 0 5px 5px;
+    cursor: pointer;
   }
 `;
 
@@ -186,6 +201,7 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
   const [showMeta, setShowMeta] = useState(false);
   const [videos, setFilmVideos] = useRecoilState(filmVideos(id));
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const [rating, setRating] = useState(null);
   const { results: filmTrailers } = videos;
 
   const getVideoData = (id) => {
@@ -197,9 +213,12 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
   };
 
   const getRating = (id) => {
-    console.log(id);
-    getCertification(id).then((res) => {
-      console.log(res);
+    let certification = getCertification(id).then(async (res) => {
+      return await res.data;
+    });
+
+    certification.then((res) => {
+      setRating(res);
     });
   };
 
@@ -264,8 +283,11 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
           <h1>{title}</h1>
           <p>{overview}</p>
           <CtaContainer>
-            <FontAwesomeIcon icon='plus' size='lg' className='hamburger' />
-            <FontAwesomeIcon icon='heart' size='lg' className='hamburger' />
+            <Ratings rating={rating} />
+            <FavouriteIconContainer>
+              <FontAwesomeIcon icon='plus' size='lg' className='hamburger' />
+              <FontAwesomeIcon icon='heart' size='lg' className='hamburger' />
+            </FavouriteIconContainer>
           </CtaContainer>
         </MetaContent>
       </FilmTileMetaContainer>
