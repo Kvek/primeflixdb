@@ -6,6 +6,7 @@ const {
   getNowPlaying,
   getImdbId,
   getMovieFanArt,
+  getCertification,
 } = require('../Api');
 
 router.get('/', async (req, res, next) => {
@@ -21,8 +22,18 @@ router.get('/', async (req, res, next) => {
         ...film,
         imdb_id: response.data.imdb_id,
         fan_art: await getFanArt(response.data.imdb_id),
+        certification: await getFilmCertification(id),
       };
     });
+  };
+
+  const getFilmCertification = async (id) => {
+    try {
+      const response = await getCertification('movie', id);
+      return response.data;
+    } catch (err) {
+      return;
+    }
   };
 
   const getFanArt = async (id) => {

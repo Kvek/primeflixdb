@@ -197,7 +197,14 @@ const FavouriteIconContainer = styled.div`
 `;
 
 const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
-  const { backdrop_path, id, title, overview, release_date } = film;
+  const {
+    backdrop_path,
+    id,
+    title,
+    overview,
+    release_date,
+    certification,
+  } = film;
   const [showMeta, setShowMeta] = useState(false);
   const [videos, setFilmVideos] = useRecoilState(filmVideos(id));
   const [isVideoReady, setIsVideoReady] = useState(false);
@@ -210,16 +217,6 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
         setFilmVideos(res.data);
       });
     }
-  };
-
-  const getRating = (id) => {
-    let certification = getCertification(id).then(async (res) => {
-      return await res.data;
-    });
-
-    certification.then((res) => {
-      setRating(res);
-    });
   };
 
   const filterTrailer = () => {
@@ -238,8 +235,8 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
     <Container
       className={showMeta ? 'showMeta' : ' hideMeta'}
       onMouseLeave={() => {
-        setShowMeta(true);
-        setShowTileMeta(true);
+        setShowMeta(false);
+        setShowTileMeta(false);
       }}
     >
       <FilmTileWrapper
@@ -253,7 +250,6 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
             setShowMeta(true);
             setShowTileMeta(true);
             getVideoData(id);
-            getRating(id);
           }}
         >
           <ChevronDown />
@@ -262,9 +258,7 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
       <FilmTileMetaContainer>
         <MetaVideo
           bgImage={
-            !isVideoReady
-              ? `https://image.tmdb.org/t/p/w500/${backdrop_path}`
-              : ''
+            !isVideoReady && `https://image.tmdb.org/t/p/w500/${backdrop_path}`
           }
         >
           {Object.keys(videos).length && (
@@ -283,7 +277,7 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
           <h1>{title}</h1>
           <p>{overview}</p>
           <CtaContainer>
-            <Ratings rating={rating} />
+            <Ratings rating={certification} />
             <FavouriteIconContainer>
               <FontAwesomeIcon icon='plus' size='lg' className='hamburger' />
               <FontAwesomeIcon icon='heart' size='lg' className='hamburger' />
