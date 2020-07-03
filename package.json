@@ -34,9 +34,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "backend": "npm run watch --prefix primeflix-BE",
-    "dev": "concurrently \"yarn start\" \"npm run backend\""
+    "test": "react-app-rewired test"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -52,6 +50,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:9000"
+  }
 }

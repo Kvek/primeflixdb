@@ -1,6 +1,7 @@
 import Axios from 'axios';
+const baseURL = 'https://gentle-crag-31843.herokuapp.com';
 
-const get = (url, params = {}) => Axios.get(url, { params });
+const get = (url, params = {}) => Axios.get(`${baseURL}${url}`, { params });
 
 // Endpoints
 
