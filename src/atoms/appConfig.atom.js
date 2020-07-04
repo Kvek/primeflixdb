@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 const appConfig = atom({
   key: 'appConfig',
-  default: [],
+  default: []
 });
 
 export default appConfig;

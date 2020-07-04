@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Axios from 'axios';
+
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Axios from 'axios';
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -136,9 +137,7 @@ const Searchbar = ({ onIconClick }) => {
     if (searchInput) {
       Axios.get(
         `https://api.themoviedb.org/3/search/movie?api_key=b4ac50bea5731f7106812c256c1b3048&query=${searchInput}`
-      ).then((res) => {
-        return setSearchOptions(res.data.results);
-      });
+      ).then((res) => setSearchOptions(res.data.results));
     }
   });
 
@@ -159,9 +158,9 @@ const Searchbar = ({ onIconClick }) => {
           <SelectContainer>
             <Select>
               {searchOptions.length === 0 && <Options>No results</Options>}
-              {searchOptions.map(({ poster_path, title }) => {
-                return <Options>{title}</Options>;
-              })}
+              {searchOptions.map(({ title }) => (
+                <Options>{title}</Options>
+              ))}
             </Select>
           </SelectContainer>
         )}
@@ -174,6 +173,8 @@ const Searchbar = ({ onIconClick }) => {
   );
 };
 
-Searchbar.propTypes = {};
+Searchbar.propTypes = {
+  onIconClick: PropTypes.func.isRequired
+};
 
 export default Searchbar;

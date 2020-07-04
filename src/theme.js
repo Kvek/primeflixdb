@@ -3,14 +3,14 @@ const colors = {
   app: '#15181CED',
   white: '#fff',
   lightgrey: '#D3D3D3',
-  gray: '#b1b1b180',
+  gray: '#b1b1b180'
 };
 
 const breakPoints = {
   mobile: '576px',
   tablet: '768px',
   desktop: '992px',
-  wide: '1200px',
+  wide: '1200px'
 };
 
 export const maxPageWidth = {
@@ -18,13 +18,13 @@ export const maxPageWidth = {
   mobile: '388px',
   tablet: '900px',
   desktop: '1200px',
-  wide: '1528px',
+  wide: '1528px'
 };
 
 const theme = {
   colors,
   breakPoints,
-  maxPageWidth,
+  maxPageWidth
 };
 
 export default theme;

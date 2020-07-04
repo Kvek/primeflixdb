@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import YouTube from 'react-youtube';
 
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import filmVideos from '@app/src/atoms/filmVideos.atom';
+import filmTile from '@atoms/filmTile.atom';
 
-import { ChevronDown } from '@app/src/assets';
-import { getVideo } from '@app/src/Api';
+import { ChevronDown } from '@app/assets';
+import { getVideo } from '@app/Api';
 
-import Ratings from '@app/src/components/Ratings';
+import Ratings from '@app/components/Ratings';
 
 const FilmTileWrapper = styled.div`
   display: flex;
@@ -203,16 +203,16 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
     title,
     overview,
     release_date,
-    certification,
+    certification
   } = film;
   const [showMeta, setShowMeta] = useState(false);
-  const [videos, setFilmVideos] = useRecoilState(filmVideos(id));
+  const [videos, setFilmVideos] = useRecoilState(filmTile(id));
   const [isVideoReady, setIsVideoReady] = useState(false);
   const { results: filmTrailers } = videos;
 
-  const getVideoData = (id) => {
+  const getVideoData = (videoId) => {
     if (!Object.keys(videos).length) {
-      getVideo(id).then((res) => {
+      getVideo(videoId).then((res) => {
         setFilmVideos(res.data);
       });
     }
@@ -220,7 +220,7 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
 
   const filterTrailer = () => {
     if (filmTrailers) {
-      let trailers = filmTrailers.filter(
+      const trailers = filmTrailers.filter(
         (trailer) => trailer.type === 'Trailer' || trailer.type === 'Teaser'
       );
 
@@ -267,7 +267,7 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
               containerClassName='youtubeContainer'
               onReady={() => setIsVideoReady(true)}
               opts={{
-                playerVars: { controls: 0, modestbranding: 1 },
+                playerVars: { controls: 0, modestbranding: 1 }
               }}
             />
           )}

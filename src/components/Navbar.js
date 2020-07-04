@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
-import Searchbar from './Searchbar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, Match } from '@reach/router';
 import { useSetRecoilState } from 'recoil';
-import isSidebarOpen from '@app/src/atoms/sidebarStatus.atom';
+
+import { Link, Match } from '@reach/router';
+import styled from '@emotion/styled';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import isSidebarOpen from '@atoms/sidebarStatus.atom';
+
+import Searchbar from '@components/Searchbar';
 
 const NavbarContainer = styled.div`
   display: flex;
@@ -200,35 +203,35 @@ const Navbar = () => {
         <LogoContainer>
           <LogoItem>
             <Link to='/'>
-              <FontAwesomeIcon icon='ticket-alt' color={'deepskyblue'} />
-              <FontAwesomeIcon icon='film' color={'tomato'} />
+              <FontAwesomeIcon icon='ticket-alt' color='deepskyblue' />
+              <FontAwesomeIcon icon='film' color='tomato' />
             </Link>
           </LogoItem>
         </LogoContainer>
         <NavListContainer>
           <NavList>
-            <Match key={'home'} path={'/'}>
+            <Match key='home' path='/'>
               {({ match }) => (
                 <Link to='/'>
                   <NavListItems isActive={match !== null}>Home</NavListItems>
                 </Link>
               )}
             </Match>
-            <Match key={'tv'} path={'/tv'}>
+            <Match key='tv' path='/tv'>
               {({ match }) => (
                 <Link to='/tv'>
                   <NavListItems isActive={match !== null}>Tv</NavListItems>
                 </Link>
               )}
             </Match>
-            <Match key={'films'} path={'/films'}>
+            <Match key='films' path='/films'>
               {({ match }) => (
                 <Link to='/films'>
                   <NavListItems isActive={match !== null}>Films</NavListItems>
                 </Link>
               )}
             </Match>
-            <Match key={'watchlist'} path={'/watchlist'}>
+            <Match key='watchlist' path='/watchlist'>
               {({ match }) => (
                 <Link to='/watchlist'>
                   <NavListItems isActive={match !== null}>

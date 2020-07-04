@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const popularFilm = PropTypes.shape({
+const popularFilm = PropTypes.shape({
   popularity: PropTypes.number,
   vote_count: PropTypes.number,
   video: false,
@@ -14,5 +14,7 @@ export const popularFilm = PropTypes.shape({
   title: PropTypes.string.isRequired,
   vote_average: PropTypes.number,
   overview: PropTypes.string.isRequired,
-  release_date: PropTypes.string.isRequired,
+  release_date: PropTypes.string.isRequired
 });
+
+export default popularFilm;

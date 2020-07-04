@@ -1,9 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
+
 import styled from '@emotion/styled';
-import FilmTile from '@app/src/components/FilmTile';
-import ArrowContainer from '@app/src/components/ArrowContainer';
-import LoadingTileGroup from '@app/src/components/LoadingTileGroup';
+
+import FilmTile from '@components/FilmTile';
+import ArrowContainer from '@components/ArrowContainer';
+
+import filmShape from '@shapes/film';
 
 const ArrowLeftWrapper = styled.div`
   position: absolute;
@@ -158,23 +162,6 @@ const FilmCarousel = ({ films }) => {
     }
   }, [isLoading]);
 
-  const filmsGroup = films.map((film) => {
-    return (
-      <TileWrapper
-        key={film.id}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className={!isScrolling && isHovered && !showMeta && 'isHovered'}
-      >
-        <FilmTile
-          film={film}
-          setShowTileMeta={(status) => setShowMeta(status)}
-          isScrolling={isScrolling}
-        />
-      </TileWrapper>
-    );
-  });
-
   return (
     <CarouselContainer
       className={classnames(
@@ -189,8 +176,8 @@ const FilmCarousel = ({ films }) => {
         className={isHovered && !showMeta && 'isHovered'}
         ref={carouselContainer}
       >
-        {films.map((film) => {
-          return (
+        {films?.map(
+          (film) =>
             film && (
               <TileWrapper
                 key={film.id}
@@ -207,14 +194,17 @@ const FilmCarousel = ({ films }) => {
                 />
               </TileWrapper>
             )
-          );
-        })}
+        )}
       </CarouselInnerContainer>
       <ArrowRightWrapper isLoading={isLoading}>
         <ArrowContainer isRight />
       </ArrowRightWrapper>
     </CarouselContainer>
   );
+};
+
+FilmCarousel.propTypes = {
+  films: PropTypes.arrayOf(PropTypes.shape(filmShape)).isRequired
 };
 
 export default FilmCarousel;

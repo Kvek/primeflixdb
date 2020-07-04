@@ -1,6 +1,11 @@
 import PropTypes from 'prop-types';
 
-export const film = PropTypes.shape({
+const genreShape = PropTypes.shape({
+  id: PropTypes.number,
+  name: PropTypes.string
+});
+
+const filmShape = PropTypes.shape({
   adult: PropTypes.bool,
   backdrop_path: PropTypes.string.isRequired,
   belongs_to_collection: null,
@@ -18,7 +23,7 @@ export const film = PropTypes.shape({
     id: 508,
     logo_path: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    origin_country: PropTypes.string.isRequired,
+    origin_country: PropTypes.string.isRequired
   }),
   production_countries: [],
   release_date: PropTypes.string.isRequired,
@@ -27,18 +32,15 @@ export const film = PropTypes.shape({
   spoken_languages: [
     {
       iso_639_1: PropTypes.string,
-      name: PropTypes.string,
-    },
+      name: PropTypes.string
+    }
   ],
   status: 'Released',
   tagline: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   video: PropTypes.bool,
   vote_average: PropTypes.number,
-  vote_count: PropTypes.number,
+  vote_count: PropTypes.number
 });
 
-const genreShape = PropTypes.shape({
-  id: PropTypes.number,
-  name: PropTypes.string,
-});
+export default filmShape;

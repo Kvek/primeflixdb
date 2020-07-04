@@ -5,8 +5,8 @@ import {
   Rating15,
   Rating18,
   RatingU,
-  RatingPG,
-} from '@app/src/assets';
+  RatingPG
+} from '@app/assets';
 
 import styled from '@emotion/styled';
 
@@ -20,39 +20,39 @@ const Ratings = ({ rating }) => {
   const [currentRating, setRating] = useState('');
 
   const usToUk = (usRating) => {
-    let rating = '';
+    let ukRating = '';
 
     switch (usRating) {
       case 'G':
-        rating = 'U';
+        ukRating = 'U';
         break;
 
       case 'PG':
-        rating = 'PG';
+        ukRating = 'PG';
         break;
 
       case 'PG-13':
-        rating = '12A';
+        ukRating = '12A';
         break;
 
       case 'R':
-        rating = '15';
+        ukRating = '15';
         break;
 
       case 'NC-17':
-        rating = '18';
+        ukRating = '18';
         break;
 
       default:
-        rating = '';
+        ukRating = '';
         break;
     }
-    return rating;
+    return ukRating;
   };
 
-  const getRatingIcon = (rating) => {
+  const getRatingIcon = (ratingString) => {
     let ratingIcon;
-    switch (rating) {
+    switch (ratingString) {
       case 'U':
         ratingIcon = <RatingU />;
         break;
@@ -97,16 +97,14 @@ const Ratings = ({ rating }) => {
     return ratingIcon;
   };
 
-  const getCertificate = (film) => {
-    return film?.release_dates[0]?.certification;
-  };
+  const getCertificate = (film) => film?.release_dates[0]?.certification;
 
   useEffect(() => {
-    let certificateList = rating?.results?.filter(
+    const certificateList = rating?.results?.filter(
       (film) => getCertificate(film) !== ''
     );
 
-    let usOrUk = certificateList?.filter(
+    const usOrUk = certificateList?.filter(
       (film) => film?.iso_3166_1 === 'US' || film?.iso_3166_1 === 'GB'
     );
 
@@ -126,7 +124,7 @@ const Ratings = ({ rating }) => {
     }
   }, [rating]);
 
-  return <div>{getRatingIcon(currentRating)}</div>;
+  return currentRating ? 'getRatingIcon(currentRating)' : null;
 };
 
 export default Ratings;

@@ -2,7 +2,8 @@ import React, { useRef } from 'react';
 import { useRecoilState } from 'recoil';
 
 import styled from '@emotion/styled';
-import isSidebarOpen from '@app/src/atoms/sidebarStatus.atom';
+
+import isSidebarOpen from '@atoms/sidebarStatus.atom';
 
 const SidebarContainer = styled.div`
   position: absolute;

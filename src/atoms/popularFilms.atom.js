@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 const popularFilms = atom({
   key: 'popularFilms',
-  default: [],
+  default: []
 });
 
 export default popularFilms;

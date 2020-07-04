@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 const isSidebarOpen = atom({
   key: 'isSidebarOpen',
-  default: false,
+  default: false
 });
 
 export default isSidebarOpen;

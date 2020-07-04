@@ -13,22 +13,22 @@ import {
   faBars,
   faTimes,
   faHeart,
-  faPlus,
+  faPlus
 } from '@fortawesome/fontawesome-free-solid';
 import { Router } from '@reach/router';
-import theme from '@app/src/theme';
+import appConfig from '@atoms/appConfig.atom';
 
-import { getConfig } from '@app/src/Api';
+import theme from '@app/theme';
+import { getConfig } from '@app/Api';
 
-import appConfig from '@app/src/atoms/appConfig.atom';
+import Sidebar from '@components/Sidebar';
+import Navbar from '@components/Navbar';
 
-import Navbar from '@app/src/components/Navbar';
-import Films from '@app/src/pages/Films';
-import Home from '@app/src/pages/Home';
-import Tv from '@app/src/pages/Tv';
-import Trailers from '@app/src/pages/Trailers';
-import Playlists from '@app/src/pages/Playlists';
-import Sidebar from '@app/src/components/Sidebar';
+import Films from '@pages/Films';
+import Home from '@pages/Home';
+import Tv from '@pages/Tv';
+import Trailers from '@pages/Trailers';
+import Playlists from '@pages/Playlists';
 
 const AppContainer = styled.div`
   width: 100%;

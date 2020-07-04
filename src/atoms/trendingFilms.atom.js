@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 const trendingFilms = atom({
   key: 'trendingFilms',
-  default: [],
+  default: []
 });
 
 export default trendingFilms;

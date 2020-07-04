@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+
 import styled from '@emotion/styled';
+
+import filmShape from '@shapes/film';
 
 const BackdropImageContainer = styled.div`
   width: 100%;
@@ -60,7 +64,7 @@ const BackdropImage = ({ films, baseUrl }) => {
         savedCallback.current();
       }
       if (delay !== null) {
-        let id = setInterval(tick, delay);
+        const id = setInterval(tick, delay);
         return () => clearInterval(id);
       }
     }, [delay]);
@@ -81,6 +85,11 @@ const BackdropImage = ({ films, baseUrl }) => {
       </BackdropGradientContainer>
     </BackdropImageContainer>
   );
+};
+
+BackdropImage.propTypes = {
+  films: PropTypes.shape(filmShape).isRequired,
+  baseUrl: PropTypes.string.isRequired
 };
 
 export default BackdropImage;

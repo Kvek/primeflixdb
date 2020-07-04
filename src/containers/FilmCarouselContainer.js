@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import LoadingTileGroup from '@app/src/components/LoadingTileGroup';
+import PropTypes from 'prop-types';
 
-import FilmCarousel from '@app/src/components/FilmCarousel';
+import LoadingTileGroup from '@components/LoadingTileGroup';
+import FilmCarousel from '@components/FilmCarousel';
+
+import filmShape from '@shapes/film';
 
 const CarouselContainer = styled.div`
   margin: 15px 0;
@@ -23,19 +26,22 @@ const CarouselTitle = styled.div`
   }
 `;
 
-const FilmCarouselContainer = ({ films, title }) => {
-  return (
-    <CarouselContainer>
-      <CarouselTitle>
-        <h3>{title}</h3>
-      </CarouselTitle>
-      {films?.length ? (
-        <FilmCarousel films={films} />
-      ) : (
-        <LoadingTileGroup count={5} />
-      )}
-    </CarouselContainer>
-  );
+const FilmCarouselContainer = ({ films, title }) => (
+  <CarouselContainer>
+    <CarouselTitle>
+      <h3>{title}</h3>
+    </CarouselTitle>
+    {films?.length ? (
+      <FilmCarousel films={films} />
+    ) : (
+      <LoadingTileGroup count={5} />
+    )}
+  </CarouselContainer>
+);
+
+FilmCarouselContainer.propTypes = {
+  films: PropTypes.arrayOf(PropTypes.shape(filmShape)).isRequired,
+  title: PropTypes.string.isRequired
 };
 
 export default FilmCarouselContainer;

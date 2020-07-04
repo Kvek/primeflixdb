@@ -3,15 +3,16 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 
 import styled from '@emotion/styled';
 
-import { getMovies } from '@app/src/Api';
+import { getMovies } from '@app/Api';
 
-import trendingFilms from '@app/src/atoms/trendingFilms.atom';
-import appConfig from '@app/src/atoms/appConfig.atom';
-import popularFilms from '@app/src/atoms/popularFilms.atom';
-import nowPlayingFilms from '@app/src/atoms/nowPlayingFilms.atom';
+import trendingFilms from '@atoms/trendingFilms.atom';
+import appConfig from '@atoms/appConfig.atom';
+import popularFilms from '@atoms/popularFilms.atom';
+import nowPlayingFilms from '@atoms/nowPlayingFilms.atom';
 
-import BackdropImage from '@app/src/components/BackdropImage';
-import FilmCarouselContainer from '@app/src/containers/FilmCarouselContainer';
+import BackdropImage from '@components/BackdropImage';
+
+import FilmCarouselContainer from '@containers/FilmCarouselContainer';
 
 const HomeContainer = styled.div`
   display: flex;
