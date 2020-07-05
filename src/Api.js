@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const baseURL = 'https://gentle-crag-31843.herokuapp.com';
+const baseURL = 'https://primeflix-be.herokuapp.com/';
 
 const get = (url, params = {}) => Axios.get(`${baseURL}${url}`, { params });
 
