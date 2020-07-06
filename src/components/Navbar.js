@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import isSidebarOpen from '@atoms/sidebarStatus.atom';
 
 import Searchbar from '@components/Searchbar';
+import { Logo } from '@app/assets';
 
 const NavbarContainer = styled.div`
   display: flex;
@@ -45,14 +46,10 @@ const LogoItem = styled.div`
   justify-content: center;
   position: relative;
   width: auto;
-  margin-top: -15%;
+  margin-top: 10%;
 
   svg {
-    :nth-of-type(1) {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-    }
+    width: 50px;
   }
 `;
 
@@ -203,8 +200,7 @@ const Navbar = () => {
         <LogoContainer>
           <LogoItem>
             <Link to='/'>
-              <FontAwesomeIcon icon='ticket-alt' color='deepskyblue' />
-              <FontAwesomeIcon icon='film' color='tomato' />
+              <Logo />
             </Link>
           </LogoItem>
         </LogoContainer>

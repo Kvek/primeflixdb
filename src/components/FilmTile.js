@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import YouTube from 'react-youtube';
+import Proptypes from 'prop-types';
 
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +10,8 @@ import filmTile from '@atoms/filmTile.atom';
 
 import { ChevronDown } from '@app/assets';
 import { getVideo } from '@app/Api';
+
+import filmShape from '@shapes/film';
 
 import Ratings from '@app/components/Ratings';
 
@@ -197,14 +200,7 @@ const FavouriteIconContainer = styled.div`
 `;
 
 const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
-  const {
-    backdrop_path,
-    id,
-    title,
-    overview,
-    release_date,
-    certification
-  } = film;
+  const { backdrop_path, id, title, overview, certification } = film;
   const [showMeta, setShowMeta] = useState(false);
   const [videos, setFilmVideos] = useRecoilState(filmTile(id));
   const [isVideoReady, setIsVideoReady] = useState(false);
@@ -250,6 +246,9 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
             setShowTileMeta(true);
             getVideoData(id);
           }}
+          onKeyPress={() => {}}
+          role='button'
+          tabIndex={0}
         >
           <ChevronDown />
         </span>
@@ -266,9 +265,7 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
               id={filterTrailer()?.id}
               containerClassName='youtubeContainer'
               onReady={() => setIsVideoReady(true)}
-              opts={{
-                playerVars: { controls: 0, modestbranding: 1 }
-              }}
+              opts={{ playerVars: { controls: 0, modestbranding: 1 } }}
             />
           )}
         </MetaVideo>
@@ -287,5 +284,13 @@ const FilmTile = ({ film, setShowTileMeta, isScrolling }) => {
     </Container>
   );
 };
+
+FilmTile.propTypes = {
+  film: Proptypes.shape(filmShape).isRequired,
+  isScrolling: Proptypes.bool,
+  setShowTileMeta: Proptypes.func.isRequired
+};
+
+FilmTile.defaultProps = { isScrolling: false };
 
 export default React.memo(FilmTile);

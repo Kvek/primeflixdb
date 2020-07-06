@@ -19,10 +19,11 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "comma-dangle": ["error", "never"],
     "no-tabs": ["error", { "allowIndentationTabs": true }],
-    "operator-linebreak": ["error", "after"],
+    "operator-linebreak": 0,
     "no-plusplus": 0,
     "camelcase": 0,
-    "consistent-return": 0
+    "consistent-return": 0,
+    "object-curly-newline": 0
   },
   "settings": {
     "import/resolver": {
