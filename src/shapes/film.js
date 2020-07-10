@@ -1,46 +1,31 @@
 import PropTypes from 'prop-types';
 
-const genreShape = PropTypes.shape({
+const genreShape = {
   id: PropTypes.number,
   name: PropTypes.string
-});
+};
 
-const filmShape = PropTypes.shape({
+const filmShape = {
   adult: PropTypes.bool,
-  backdrop_path: PropTypes.string.isRequired,
-  belongs_to_collection: null,
+  backdrop_path: PropTypes.string,
   budget: PropTypes.number,
-  genres: PropTypes.arrayOf(genreShape),
-  homepage: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-  imdb_id: 'tt0137523',
-  original_language: PropTypes.string.isRequired,
-  original_title: PropTypes.string.isRequired,
-  overview: PropTypes.string.isRequired,
-  popularity: 34.693,
-  poster_path: PropTypes.string.isRequired,
-  production_companies: PropTypes.arrayOf({
-    id: 508,
-    logo_path: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    origin_country: PropTypes.string.isRequired
-  }),
-  production_countries: [],
-  release_date: PropTypes.string.isRequired,
-  revenue: PropTypes.number.isRequired,
-  runtime: PropTypes.number.isRequired,
-  spoken_languages: [
-    {
-      iso_639_1: PropTypes.string,
-      name: PropTypes.string
-    }
-  ],
-  status: 'Released',
-  tagline: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  video: PropTypes.bool,
+  genres: PropTypes.arrayOf(PropTypes.shape(genreShape)),
+  homepage: PropTypes.string,
+  id: PropTypes.number,
+  imdb_id: PropTypes.string,
+  original_language: PropTypes.string,
+  original_title: PropTypes.string,
+  overview: PropTypes.string,
+  popularity: PropTypes.number,
+  poster_path: PropTypes.string,
+  release_date: PropTypes.string,
+  revenue: PropTypes.number,
+  runtime: PropTypes.number,
+  status: PropTypes.string,
+  tagline: PropTypes.string,
+  title: PropTypes.string,
   vote_average: PropTypes.number,
   vote_count: PropTypes.number
-});
+};
 
 export default filmShape;

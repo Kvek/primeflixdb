@@ -31,7 +31,7 @@ const FilmCarouselContainer = ({ films, title }) => (
     <CarouselTitle>
       <h3>{title}</h3>
     </CarouselTitle>
-    {films?.length ? (
+    {films.length ? (
       <FilmCarousel films={films} />
     ) : (
       <LoadingTileGroup count={5} />

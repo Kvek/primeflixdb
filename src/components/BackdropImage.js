@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useRecoilValue } from 'recoil';
 
 import styled from '@emotion/styled';
 
 import filmShape from '@shapes/film';
+
+import appConfig from '@atoms/appConfig.atom';
 
 const BackdropImageContainer = styled.div`
   width: 100%;
@@ -47,8 +50,10 @@ const BackdropGradient = styled.div`
   z-index: 1;
 `;
 
-const BackdropImage = ({ films, baseUrl }) => {
+const BackdropImage = ({ films }) => {
+  const config = useRecoilValue(appConfig);
   const [current, setCurrent] = useState(0);
+  const { secure_base_url } = config;
 
   function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -74,10 +79,13 @@ const BackdropImage = ({ films, baseUrl }) => {
     setCurrent(current >= films.length - 1 ? 0 : current + 1);
   }, 15000);
 
+  if (!films.length) return null;
+
   return (
     <BackdropImageContainer
       image={
-        films[current] && `${baseUrl}original${films[current]?.backdrop_path}`
+        films[current] &&
+        `${secure_base_url}original${films[current].backdrop_path}`
       }
     >
       <BackdropGradientContainer>
@@ -88,8 +96,7 @@ const BackdropImage = ({ films, baseUrl }) => {
 };
 
 BackdropImage.propTypes = {
-  films: PropTypes.shape(filmShape).isRequired,
-  baseUrl: PropTypes.string.isRequired
+  films: PropTypes.arrayOf(PropTypes.shape(filmShape)).isRequired
 };
 
 export default BackdropImage;

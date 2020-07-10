@@ -239,7 +239,7 @@ const Navbar = () => {
           </NavList>
         </NavListContainer>
         <SearchContainer>
-          <Searchbar />
+          <Searchbar onIconClick={() => {}} />
         </SearchContainer>
         <LoginContainer>
           <FontAwesomeIcon icon='bell' />
