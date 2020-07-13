@@ -20,7 +20,8 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "react-youtube": "^7.11.2",
-    "recoil": "^0.0.7"
+    "recoil": "^0.0.7",
+    "uuid": "^8.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",

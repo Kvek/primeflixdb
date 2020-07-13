@@ -12,7 +12,6 @@ const TileContainer = styled.div`
   height: 100%;
   width: 100%;
   min-height: 147px;
-  margin-right: 5px;
 `;
 
 const TileContentContainer = styled.div`
@@ -49,7 +48,7 @@ const Tile = ({ id }) => {
 };
 
 Tile.propTypes = {
-  id: PropTypes.number.isRequired
+  id: PropTypes.string.isRequired
 };
 
-export default Tile;
+export default React.memo(Tile);

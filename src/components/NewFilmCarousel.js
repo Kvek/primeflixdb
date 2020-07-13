@@ -10,7 +10,10 @@ import filmShape from '@app/shapes/film';
 const CarouselContainer = styled.div`
   width: 100%;
   display: flex;
-  overflow: hidden;
+  pointer-events: none;
+  height: 250px;
+  position: relative;
+  align-items: center;
 `;
 
 const FilmInnerCarouselContainer = styled.div`
@@ -19,9 +22,12 @@ const FilmInnerCarouselContainer = styled.div`
   flex-direction: row;
   scroll-snap-type: x mandatory;
   width: 100%;
+  align-items: center;
+  height: 100%;
   overflow: hidden;
   overflow-x: visible;
   scrollbar-width: none;
+  pointer-events: auto;
 
   &::-webkit-scrollbar {
     display: none;
@@ -34,7 +40,7 @@ const ArrowLeftWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 50px;
-  height: calc(100% - 10px);
+  height: 100%;
   max-height: 147px;
   left: 0;
   pointer-events: none;
@@ -45,7 +51,7 @@ const ArrowRightWrapper = styled.div`
   position: absolute;
   display: ${(props) => (props.isLoading ? 'none' : 'flex')};
   width: 50px;
-  height: calc(100% - 10px);
+  height: 100%;
   max-height: 147px;
   right: 0;
   pointer-events: none;
