@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { ThemeProvider } from 'emotion-theming';
-import _ from 'lodash';
+import { chunk } from 'lodash';
 
 import styled from '@emotion/styled';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -79,9 +79,9 @@ const App = () => {
     });
 
     getMovies().then((res) => {
-      setPopular(_.chunk(res.data?.popular, 5));
-      setTrending(_.chunk(res.data?.trending, 5));
-      setNowPlaying(_.chunk(res.data?.now_playing, 5));
+      setPopular(chunk(res.data?.popular, 5));
+      setTrending(chunk(res.data?.trending, 5));
+      setNowPlaying(chunk(res.data?.now_playing, 5));
     });
   }, []);
 
