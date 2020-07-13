@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
-import styled from '@emotion/styled';
 import { useSetRecoilState } from 'recoil';
 import { ThemeProvider } from 'emotion-theming';
+import _ from 'lodash';
+
+import styled from '@emotion/styled';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faSearch,
@@ -16,10 +18,14 @@ import {
   faPlus
 } from '@fortawesome/fontawesome-free-solid';
 import { Router } from '@reach/router';
+
 import appConfig from '@atoms/appConfig.atom';
+import trendingFilms from '@atoms/trendingFilms.atom';
+import popularFilms from '@atoms/popularFilms.atom';
+import nowPlayingFilms from '@atoms/nowPlayingFilms.atom';
 
 import theme from '@app/theme';
-import { getConfig } from '@app/Api';
+import { getConfig, getMovies } from '@app/Api';
 
 import Sidebar from '@components/Sidebar';
 import Navbar from '@components/Navbar';
@@ -50,6 +56,9 @@ const AppContainer = styled.div`
 
 const App = () => {
   const setAppConfig = useSetRecoilState(appConfig);
+  const setTrending = useSetRecoilState(trendingFilms);
+  const setPopular = useSetRecoilState(popularFilms);
+  const setNowPlaying = useSetRecoilState(nowPlayingFilms);
 
   useEffect(() => {
     library.add(
@@ -67,6 +76,12 @@ const App = () => {
 
     getConfig().then((res) => {
       setAppConfig(res?.data?.images);
+    });
+
+    getMovies().then((res) => {
+      setPopular(_.chunk(res.data?.popular, 5));
+      setTrending(_.chunk(res.data?.trending, 5));
+      setNowPlaying(_.chunk(res.data?.now_playing, 5));
     });
   }, []);
 

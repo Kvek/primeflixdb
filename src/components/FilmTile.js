@@ -144,6 +144,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   pointer-events: auto;
+  margin: 0 calc(calc(20% - 250px) / 2);
 
   &.showMeta {
     width: 320px;

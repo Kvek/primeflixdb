@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import React from 'react';
+import { useRecoilValue } from 'recoil';
 
 import styled from '@emotion/styled';
 
-import { getMovies } from '@app/Api';
-
-import trendingFilms from '@atoms/trendingFilms.atom';
 import appConfig from '@atoms/appConfig.atom';
 import popularFilms from '@atoms/popularFilms.atom';
-import nowPlayingFilms from '@atoms/nowPlayingFilms.atom';
 
 import BackdropImage from '@components/BackdropImage';
 
-import FilmCarouselContainer from '@containers/FilmCarouselContainer';
+import NewFilmCarousel from '@app/components/NewFilmCarousel';
 
 const HomeContainer = styled.div`
   display: flex;
@@ -33,29 +29,19 @@ const TilesContainer = styled.div`
 `;
 
 const Home = () => {
+  const popular = useRecoilValue(popularFilms);
   const config = useRecoilValue(appConfig);
-
-  const [trending, setTrending] = useRecoilState(trendingFilms);
-  const [popular, setPopular] = useRecoilState(popularFilms);
-  const [nowPlaying, setNowPlaying] = useRecoilState(nowPlayingFilms);
-
-  useEffect(() => {
-    getMovies().then((res) => {
-      setPopular(res.data?.popular);
-      setTrending(res.data?.trending);
-      setNowPlaying(res.data?.now_playing);
-    });
-  }, []);
 
   const { secure_base_url } = config;
 
   return (
     <HomeContainer>
-      <BackdropImage baseUrl={secure_base_url} films={trending} />
-      <TilesContainer style={{ marginTop: trending.length ? '-120px' : 0 }}>
-        <FilmCarouselContainer films={popular} title='popular' />
-        <FilmCarouselContainer films={nowPlaying} title='Now playing' />
-        <FilmCarouselContainer films={trending} title='trending' />
+      <BackdropImage
+        baseUrl={secure_base_url}
+        films={popular.length !== 0 ? popular[0] : []}
+      />
+      <TilesContainer style={{ marginTop: popular.length ? '-120px' : 0 }}>
+        <NewFilmCarousel films={popular} />
       </TilesContainer>
     </HomeContainer>
   );
