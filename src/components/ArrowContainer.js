@@ -19,6 +19,12 @@ const Container = styled.div`
   z-index: 3;
   pointer-events: auto;
 
+  button {
+    background: none;
+    border: none;
+    outline: none;
+  }
+
   svg {
     cursor: pointer;
     transition: transform 0.2s linear, padding-right 0.2s linear,
@@ -46,15 +52,18 @@ const Container = styled.div`
   }
 `;
 
-const ArrowContainer = React.forwardRef(({ isRight, width }, ref) => (
-  <Container width={width} className={isRight ? 'right' : 'left'} ref={ref}>
-    <Chevron />
+const ArrowContainer = ({ isRight, width, onClickHandler }) => (
+  <Container width={width} className={isRight ? 'right' : 'left'}>
+    <button onClick={onClickHandler} type='button' tabIndex='0'>
+      <Chevron />
+    </button>
   </Container>
-));
+);
 
 ArrowContainer.propTypes = {
   isRight: PropTypes.bool,
-  width: PropTypes.string
+  width: PropTypes.string,
+  onClickHandler: PropTypes.func.isRequired
 };
 
 ArrowContainer.defaultProps = {
