@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
+import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { useSetRecoilState, useRecoilState } from 'recoil';
 import { ThemeProvider } from 'emotion-theming';
-import { chunk } from 'lodash';
+import { chunk, isEqual } from 'lodash';
+import withSizes from 'react-sizes';
 
 import styled from '@emotion/styled';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -54,11 +56,12 @@ const AppContainer = styled.div`
   }
 `;
 
-const App = () => {
-  const setAppConfig = useSetRecoilState(appConfig);
+const App = ({ numberOfTiles, deviceWidths }) => {
+  const [config, setAppConfig] = useRecoilState(appConfig);
   const setTrending = useSetRecoilState(trendingFilms);
   const setPopular = useSetRecoilState(popularFilms);
   const setNowPlaying = useSetRecoilState(nowPlayingFilms);
+  const deviceWidthsRefs = useRef(null);
 
   useEffect(() => {
     library.add(
@@ -75,15 +78,26 @@ const App = () => {
     );
 
     getConfig().then((res) => {
-      setAppConfig(res?.data?.images);
+      setAppConfig({ images: res?.data?.images, deviceWidths });
     });
 
-    getMovies().then((res) => {
-      setPopular(chunk(res.data?.popular, 5));
-      setTrending(chunk(res.data?.trending, 5));
-      setNowPlaying(chunk(res.data?.now_playing, 5));
-    });
+    deviceWidthsRefs.current = deviceWidths;
   }, []);
+
+  useEffect(() => {
+    getMovies().then((res) => {
+      setPopular(chunk(res.data?.popular, numberOfTiles));
+      setTrending(chunk(res.data?.trending, numberOfTiles));
+      setNowPlaying(chunk(res.data?.now_playing, numberOfTiles));
+    });
+  }, [numberOfTiles]);
+
+  useEffect(() => {
+    if (!isEqual(deviceWidthsRefs.current, deviceWidths)) {
+      deviceWidthsRefs.current = deviceWidths;
+      setAppConfig({ images: config.images, deviceWidths });
+    }
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -102,4 +116,29 @@ const App = () => {
   );
 };
 
-export default App;
+const mapSizesToProps = (sizes) => {
+  const isDesktop = sizes.width >= 1024 && sizes.width <= 1528;
+  const isWide = sizes.width > 1528;
+
+  return {
+    deviceWidths: {
+      isMobile: withSizes.isMobile(sizes),
+      isTablet: withSizes.isTablet(sizes),
+      isDesktop,
+      isWide
+    },
+    numberOfTiles: isWide ? 7 : 5
+  };
+};
+
+App.propTypes = {
+  numberOfTiles: PropTypes.number.isRequired,
+  deviceWidths: PropTypes.shape({
+    isMobile: PropTypes.bool,
+    isTablet: PropTypes.bool,
+    isDesktop: PropTypes.bool,
+    isWide: PropTypes.bool
+  }).isRequired
+};
+
+export default withSizes(mapSizesToProps)(App);
