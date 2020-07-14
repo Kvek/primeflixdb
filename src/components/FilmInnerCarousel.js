@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
@@ -49,6 +49,7 @@ const FilmInnerCarouselContainer = styled.div`
   width: 100%;
   height: 100%;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   scroll-margin-left: 50px;
   position: relative;
   pointer-events: auto;
@@ -84,7 +85,9 @@ const MediaTiles = React.memo(({ media }) => {
   const id = uuidv4();
   const setMediaData = useSetRecoilState(mediaTile(id));
 
-  setMediaData(media);
+  useEffect(() => {
+    setMediaData(media);
+  }, [media]);
 
   return <Tile id={id} />;
 });
