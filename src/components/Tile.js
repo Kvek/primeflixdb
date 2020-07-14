@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import styled from '@emotion/styled';
 
@@ -28,11 +28,10 @@ const TileContentContainer = styled.div`
 const TileMetaContainer = styled.div`
   display: none;
   flex: 0;
-  border: 1px solid;
 `;
 
 const Tile = ({ id }) => {
-  const [mediaData, updateMediaTile] = useRecoilState(mediaTile(id));
+  const mediaData = useRecoilValue(mediaTile(id));
   const { backdrop_path } = mediaData;
 
   return (

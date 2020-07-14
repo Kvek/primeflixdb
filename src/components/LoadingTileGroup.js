@@ -14,6 +14,11 @@ const LoadingTileGroupContainer = styled.div`
 
 const Tile = styled.div`
   display: block;
+  margin: 5px 20px 5px 0;
+
+  &:nth-last-of-type(1) {
+    margin-right: 0;
+  }
 `;
 
 const LoadingTileGroup = ({ count }) => {
@@ -33,7 +38,11 @@ const LoadingTileGroup = ({ count }) => {
 };
 
 LoadingTileGroup.propTypes = {
-  count: PropTypes.number.isRequired
+  count: PropTypes.number
+};
+
+LoadingTileGroup.defaultProps = {
+  count: 0
 };
 
 export default LoadingTileGroup;

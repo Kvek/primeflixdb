@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSetRecoilState, useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { ThemeProvider } from 'emotion-theming';
 import { chunk, isEqual } from 'lodash';
 import withSizes from 'react-sizes';
@@ -28,6 +28,7 @@ import nowPlayingFilms from '@atoms/nowPlayingFilms.atom';
 
 import theme from '@app/theme';
 import { getConfig, getMovies } from '@app/Api';
+import AppContext from '@app/AppContext';
 
 import Sidebar from '@components/Sidebar';
 import Navbar from '@components/Navbar';
@@ -57,11 +58,12 @@ const AppContainer = styled.div`
 `;
 
 const App = ({ numberOfTiles, deviceWidths }) => {
-  const [config, setAppConfig] = useRecoilState(appConfig);
+  const setAppConfig = useSetRecoilState(appConfig);
   const setTrending = useSetRecoilState(trendingFilms);
   const setPopular = useSetRecoilState(popularFilms);
   const setNowPlaying = useSetRecoilState(nowPlayingFilms);
-  const deviceWidthsRefs = useRef(null);
+
+  const [appConfigContext, setAppConfigContext] = useState({});
 
   useEffect(() => {
     library.add(
@@ -78,10 +80,8 @@ const App = ({ numberOfTiles, deviceWidths }) => {
     );
 
     getConfig().then((res) => {
-      setAppConfig({ images: res?.data?.images, deviceWidths });
+      setAppConfig({ images: res?.data?.images });
     });
-
-    deviceWidthsRefs.current = deviceWidths;
   }, []);
 
   useEffect(() => {
@@ -93,25 +93,29 @@ const App = ({ numberOfTiles, deviceWidths }) => {
   }, [numberOfTiles]);
 
   useEffect(() => {
-    if (!isEqual(deviceWidthsRefs.current, deviceWidths)) {
-      deviceWidthsRefs.current = deviceWidths;
-      setAppConfig({ images: config.images, deviceWidths });
+    if (!isEqual(appConfigContext, { numberOfTiles, deviceWidths })) {
+      setAppConfigContext({
+        deviceWidths,
+        numberOfTiles
+      });
     }
   });
 
   return (
     <ThemeProvider theme={theme}>
-      <AppContainer>
-        <Navbar />
-        <Router>
-          <Home path='/' />
-          <Tv path='/tv' />
-          <Films path='/films' />
-          <Trailers path='/trailers' />
-          <Playlists path='/playlists' />
-        </Router>
-      </AppContainer>
-      <Sidebar />
+      <AppContext.Provider value={appConfigContext}>
+        <AppContainer>
+          <Navbar />
+          <Router>
+            <Home path='/' />
+            <Tv path='/tv' />
+            <Films path='/films' />
+            <Trailers path='/trailers' />
+            <Playlists path='/playlists' />
+          </Router>
+        </AppContainer>
+        <Sidebar />
+      </AppContext.Provider>
     </ThemeProvider>
   );
 };

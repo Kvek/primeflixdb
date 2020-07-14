@@ -3,7 +3,8 @@ const colors = {
   app: '#15181CED',
   white: '#fff',
   lightgrey: '#D3D3D3',
-  gray: '#b1b1b180'
+  gray: '#b1b1b180',
+  black: '#000'
 };
 
 const breakPoints = {

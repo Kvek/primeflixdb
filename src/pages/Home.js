@@ -32,14 +32,13 @@ const TilesContainer = styled.div`
 const Home = () => {
   const popular = useRecoilValue(popularFilms);
   const config = useRecoilValue(appConfig);
-
-  const { secure_base_url } = config;
+  const { images } = config;
 
   return (
     <HomeContainer>
       <BackdropImage
-        baseUrl={secure_base_url}
-        films={popular.length !== 0 && popular[0]}
+        baseUrl={images?.secure_base_url}
+        films={popular.length !== 0 ? popular[0] : []}
       />
       <TilesContainer>
         <NewFilmCarousel films={popular} />

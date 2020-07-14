@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 
 const TileLoaderContainer = styled.div`
   display: flex;
-  margin: 5px 20px 5px 0;
 `;
 
 const TileLoader = () => (
