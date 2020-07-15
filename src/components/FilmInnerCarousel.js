@@ -17,7 +17,7 @@ const TileWrapper = styled.div`
   height: 100%;
   max-width: 260px;
   max-height: 147px;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out 0.2s;
 
   &:hover {
     transform: scale(1.5) translateX(0) !important;
@@ -53,6 +53,7 @@ const FilmInnerCarouselContainer = styled.div`
   scroll-margin-left: 50px;
   position: relative;
   pointer-events: auto;
+  transition: margin 0.2s ease-in-out 0.2s;
 
   &:hover {
     &.isTileHovered {

@@ -65,7 +65,6 @@ const FilmInnerCarouselContainer = styled.div`
   align-items: center;
   height: 100%;
   overflow: hidden;
-  overflow-x: visible;
   scrollbar-width: none;
   pointer-events: auto;
 
