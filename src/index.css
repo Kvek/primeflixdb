@@ -7,3 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
