@@ -11,13 +11,14 @@ import styled from '@emotion/styled';
 import mediaTile from '@atoms/mediaTile.atom';
 
 const TileWrapper = styled.div`
-  padding: 0 4px;
+  padding-right: 8px;
   width: 100%;
   height: 100%;
   max-width: 260px;
   max-height: 147px;
   transition: all 0.2s ease-in-out;
   pointer-events: auto;
+  position: relative;
 
   &:hover {
     transform: translate3d(0, 0, 0) !important;
@@ -38,13 +39,11 @@ const FilmInnerCarouselContainer = styled.div`
   scroll-snap-align: start;
   scroll-snap-stop: always;
   scroll-margin-left: 50px;
-  position: relative;
   pointer-events: none;
   transition: margin 0.2s ease-in-out;
+  background: red;
 
   &:hover {
-    margin-right: 8px;
-
     ${TileWrapper} {
       /* transform: translate3d(-8px, 0, 0); */
     }
@@ -64,14 +63,26 @@ const TileContainer = styled.div`
 `;
 
 const MediaTiles = React.memo(({ media }) => {
-  const id = uuidv4();
+  const [showTileMeta, setShowMeta] = useState(false);
+  const [id, setTileId] = useState(null);
   const setMediaData = useSetRecoilState(mediaTile(id));
 
   useEffect(() => {
-    setMediaData(media);
-  }, [media]);
+    setTileId(uuidv4());
+  }, []);
 
-  return <Tile id={id} />;
+  useEffect(() => {
+    setMediaData(media);
+  }, [media, id]);
+
+  return (
+    <div
+      onMouseEnter={() => setShowMeta(true)}
+      onMouseLeave={() => setShowMeta(false)}
+    >
+      {id && <Tile id={id} showMeta={showTileMeta} />}
+    </div>
+  );
 });
 
 const FilmInnerCarousel = React.forwardRef(({ films, id }, ref) => {

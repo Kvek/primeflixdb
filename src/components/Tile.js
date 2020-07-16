@@ -26,11 +26,18 @@ const TileContentContainer = styled.div`
 `;
 
 const TileMetaContainer = styled.div`
-  display: none;
+  position: absolute;
   flex: 0;
+  height: 150%;
+  width: 150%;
+  display: block;
+  background: white;
+  left: -25%;
+  top: -25%;
+  z-index: 1;
 `;
 
-const Tile = ({ id }) => {
+const Tile = ({ id, showMeta }) => {
   const mediaData = useRecoilValue(mediaTile(id));
   const { backdrop_path } = mediaData;
 
@@ -41,13 +48,14 @@ const Tile = ({ id }) => {
           backdrop_path && `https://image.tmdb.org/t/p/w500/${backdrop_path}`
         }
       />
-      <TileMetaContainer />
+      {showMeta && <TileMetaContainer />}
     </TileContainer>
   );
 };
 
 Tile.propTypes = {
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  showMeta: PropTypes.bool.isRequired
 };
 
 export default React.memo(Tile);
