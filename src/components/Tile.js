@@ -26,15 +26,20 @@ const TileContentContainer = styled.div`
 `;
 
 const TileMetaContainer = styled.div`
-  position: absolute;
-  flex: 0;
   height: 150%;
+  position: absolute;
   width: 150%;
-  display: block;
+  display: flex;
   background: white;
   left: -25%;
   top: -25%;
-  z-index: 1;
+  z-index: 2;
+  transform: scale(0);
+  transition: transform 0.2s ease-in;
+
+  &.showMeta {
+    transform: scale(1);
+  }
 `;
 
 const Tile = ({ id, showMeta }) => {
@@ -48,7 +53,7 @@ const Tile = ({ id, showMeta }) => {
           backdrop_path && `https://image.tmdb.org/t/p/w500/${backdrop_path}`
         }
       />
-      {showMeta && <TileMetaContainer />}
+      <TileMetaContainer className={showMeta && 'showMeta'} />
     </TileContainer>
   );
 };

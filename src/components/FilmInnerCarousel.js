@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
+
 import filmShape from '@app/shapes/film';
 
 import Tile from '@components/Tile';
@@ -20,11 +21,15 @@ const TileWrapper = styled.div`
   pointer-events: auto;
   position: relative;
 
+  &.currentHoveredTile {
+    z-index: 2;
+  }
+
   &:hover {
     transform: translate3d(0, 0, 0) !important;
 
     & ~ ${() => TileWrapper} {
-      /* transform: translate3d(8px, 0, 0) !important; */
+      transform: translate3d(8px, 0, 0) !important;
     }
   }
 `;
@@ -45,7 +50,7 @@ const FilmInnerCarouselContainer = styled.div`
 
   &:hover {
     ${TileWrapper} {
-      /* transform: translate3d(-8px, 0, 0); */
+      transform: translate3d(-8px, 0, 0);
     }
   }
 
@@ -60,6 +65,7 @@ const TileContainer = styled.div`
   align-items: center;
   width: 100%;
   pointer-events: none;
+  opacity: 1;
 `;
 
 const MediaTiles = React.memo(({ media }) => {
@@ -75,11 +81,12 @@ const MediaTiles = React.memo(({ media }) => {
     setMediaData(media);
   }, [media, id]);
 
+  const toggleMeta = () => {
+    setShowMeta(!showTileMeta);
+  };
+
   return (
-    <div
-      onMouseEnter={() => setShowMeta(true)}
-      onMouseLeave={() => setShowMeta(false)}
-    >
+    <div onClick={toggleMeta}>
       {id && <Tile id={id} showMeta={showTileMeta} />}
     </div>
   );
@@ -100,6 +107,9 @@ const FilmInnerCarousel = React.forwardRef(({ films, id }, ref) => {
             key={index.toString()}
             onMouseEnter={() => setIndex(index)}
             onMouseLeave={() => setIndex(null)}
+            className={
+              currentHoveredTileIndex === index && 'currentHoveredTile'
+            }
           >
             <MediaTiles media={film} />
           </TileWrapper>
