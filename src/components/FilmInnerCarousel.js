@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
+import classnames from 'classnames';
 
 import filmShape from '@app/shapes/film';
 
@@ -17,7 +18,7 @@ const TileWrapper = styled.div`
   height: 100%;
   max-width: 260px;
   max-height: 147px;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s linear;
   pointer-events: auto;
   position: relative;
 
@@ -25,11 +26,29 @@ const TileWrapper = styled.div`
     z-index: 2;
   }
 
-  &:hover {
-    transform: translate3d(0, 0, 0) !important;
+  &.showMeta {
+    transform: scale(1) translate3d(0, 0, 0) !important;
 
     & ~ ${() => TileWrapper} {
-      transform: translate3d(8px, 0, 0) !important;
+      transform: translate3d(76px, 0, 0) !important;
+    }
+
+    &:hover {
+      transform: translate3d(0, 0, 0) !important;
+
+      & ~ ${() => TileWrapper} {
+        transform: translate3d(76px, 0, 0) !important;
+      }
+    }
+  }
+
+  &.hideMeta {
+    &:hover {
+      transform: scale(1.2) translate3d(0, 0, 0) !important;
+
+      & ~ ${() => TileWrapper} {
+        transform: translate3d(28px, 0, 0) !important;
+      }
     }
   }
 `;
@@ -45,12 +64,24 @@ const FilmInnerCarouselContainer = styled.div`
   scroll-snap-stop: always;
   scroll-margin-left: 50px;
   pointer-events: none;
-  transition: margin 0.2s ease-in-out;
-  background: red;
 
-  &:hover {
+  &.hideMeta {
+    &:hover {
+      ${TileWrapper} {
+        transform: translate3d(-28px, 0, 0);
+      }
+    }
+  }
+
+  &.showMeta {
     ${TileWrapper} {
-      transform: translate3d(-8px, 0, 0);
+      transform: translate3d(-68px, 0, 0);
+    }
+
+    &:hover {
+      ${TileWrapper} {
+        transform: translate3d(-68px, 0, 0);
+      }
     }
   }
 
@@ -64,11 +95,11 @@ const TileContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  pointer-events: none;
+  pointer-events: auto;
   opacity: 1;
 `;
 
-const MediaTiles = React.memo(({ media }) => {
+const MediaTiles = React.memo(({ media, toggleMeta, index }) => {
   const [showTileMeta, setShowMeta] = useState(false);
   const [id, setTileId] = useState(null);
   const setMediaData = useSetRecoilState(mediaTile(id));
@@ -81,37 +112,59 @@ const MediaTiles = React.memo(({ media }) => {
     setMediaData(media);
   }, [media, id]);
 
-  const toggleMeta = () => {
-    setShowMeta(!showTileMeta);
-  };
+  useEffect(() => {
+    if (showTileMeta) {
+      toggleMeta(index);
+    } else {
+      toggleMeta(null);
+    }
+  }, [showTileMeta]);
 
+  if (!id) return null;
   return (
-    <div onClick={toggleMeta}>
-      {id && <Tile id={id} showMeta={showTileMeta} />}
-    </div>
+    <Tile
+      id={id}
+      showMeta={showTileMeta}
+      toggleMeta={() => setShowMeta(!showTileMeta)}
+    />
   );
 });
 
 const FilmInnerCarousel = React.forwardRef(({ films, id }, ref) => {
-  const [currentHoveredTileIndex, setIndex] = useState(null);
+  const [currentMetaShowingTile, setShowMetaStatus] = useState(null);
+  const [isMetaShowing, setIsMetaShowing] = useState(false);
+
+  useEffect(() => {
+    if (currentMetaShowingTile) {
+      setIsMetaShowing(true);
+    } else {
+      setIsMetaShowing(false);
+    }
+    return () => {
+      setIsMetaShowing(false);
+    };
+  }, [currentMetaShowingTile]);
 
   return (
     <FilmInnerCarouselContainer
       ref={ref}
       id={id}
-      currentTileIndex={currentHoveredTileIndex}
+      className={currentMetaShowingTile ? 'showMeta' : 'hideMeta'}
     >
       <TileContainer>
         {films.map((film, index) => (
           <TileWrapper
             key={index.toString()}
-            onMouseEnter={() => setIndex(index)}
-            onMouseLeave={() => setIndex(null)}
-            className={
-              currentHoveredTileIndex === index && 'currentHoveredTile'
-            }
+            className={classnames(
+              currentMetaShowingTile === index && 'showMeta',
+              !isMetaShowing && 'hideMeta'
+            )}
           >
-            <MediaTiles media={film} />
+            <MediaTiles
+              media={film}
+              index={index}
+              toggleMeta={setShowMetaStatus}
+            />
           </TileWrapper>
         ))}
       </TileContainer>
@@ -120,7 +173,9 @@ const FilmInnerCarousel = React.forwardRef(({ films, id }, ref) => {
 });
 
 MediaTiles.propTypes = {
-  media: PropTypes.shape(filmShape).isRequired
+  media: PropTypes.shape(filmShape).isRequired,
+  toggleMeta: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired
 };
 
 FilmInnerCarousel.propTypes = {

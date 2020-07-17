@@ -12,6 +12,7 @@ const TileContainer = styled.div`
   height: 100%;
   width: 100%;
   min-height: 147px;
+  pointer-events: auto;
 `;
 
 const TileContentContainer = styled.div`
@@ -42,12 +43,12 @@ const TileMetaContainer = styled.div`
   }
 `;
 
-const Tile = ({ id, showMeta }) => {
+const Tile = ({ id, showMeta, toggleMeta }) => {
   const mediaData = useRecoilValue(mediaTile(id));
   const { backdrop_path } = mediaData;
 
   return (
-    <TileContainer>
+    <TileContainer onClick={toggleMeta}>
       <TileContentContainer
         bgImage={
           backdrop_path && `https://image.tmdb.org/t/p/w500/${backdrop_path}`
@@ -60,7 +61,8 @@ const Tile = ({ id, showMeta }) => {
 
 Tile.propTypes = {
   id: PropTypes.string.isRequired,
-  showMeta: PropTypes.bool.isRequired
+  showMeta: PropTypes.bool.isRequired,
+  toggleMeta: PropTypes.func.isRequired
 };
 
 export default React.memo(Tile);
