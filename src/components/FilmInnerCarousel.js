@@ -13,12 +13,12 @@ import styled from '@emotion/styled';
 import mediaTile from '@atoms/mediaTile.atom';
 
 const TileWrapper = styled.div`
-  padding-right: 8px;
+  margin-right: 8px;
   width: 100%;
   height: 100%;
   max-width: 260px;
   max-height: 147px;
-  transition: all 0.2s linear;
+  transition: transform 0.2s linear;
   pointer-events: auto;
   position: relative;
 
@@ -27,27 +27,27 @@ const TileWrapper = styled.div`
   }
 
   &.showMeta {
-    transform: scale(1) translate3d(0, 0, 0) !important;
+    transform: translateX(0) !important;
 
     & ~ ${() => TileWrapper} {
-      transform: translate3d(76px, 0, 0) !important;
+      transform: translateX(68px) !important;
     }
 
     &:hover {
-      transform: translate3d(0, 0, 0) !important;
+      transform: translateX(0) !important;
 
       & ~ ${() => TileWrapper} {
-        transform: translate3d(76px, 0, 0) !important;
+        transform: translateX(68px) !important;
       }
     }
   }
 
   &.hideMeta {
     &:hover {
-      transform: scale(1.2) translate3d(0, 0, 0) !important;
+      transform: scale(1.2) translateX(0) !important;
 
       & ~ ${() => TileWrapper} {
-        transform: translate3d(28px, 0, 0) !important;
+        transform: translateX(28px) !important;
       }
     }
   }
@@ -64,25 +64,31 @@ const FilmInnerCarouselContainer = styled.div`
   scroll-snap-stop: always;
   scroll-margin-left: 50px;
   pointer-events: none;
+  transition: margin-right 0.2s linear, margin-left 0.2s linear;
 
   &.hideMeta {
     &:hover {
       ${TileWrapper} {
-        transform: translate3d(-28px, 0, 0);
+        transform: translateX(-28px);
       }
     }
   }
 
   &.showMeta {
     ${TileWrapper} {
-      transform: translate3d(-68px, 0, 0);
+      transform: translateX(-68px);
     }
 
     &:hover {
       ${TileWrapper} {
-        transform: translate3d(-68px, 0, 0);
+        transform: translateX(-68px);
       }
     }
+  }
+
+  &:hover {
+    margin-right: 28px;
+    margin-left: 28px;
   }
 
   &:nth-last-of-type(1) {
@@ -95,7 +101,7 @@ const TileContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  pointer-events: auto;
+  pointer-events: none;
   opacity: 1;
 `;
 
@@ -113,14 +119,11 @@ const MediaTiles = React.memo(({ media, toggleMeta, index }) => {
   }, [media, id]);
 
   useEffect(() => {
-    if (showTileMeta) {
-      toggleMeta(index);
-    } else {
-      toggleMeta(null);
-    }
+    toggleMeta(showTileMeta ? index : null);
   }, [showTileMeta]);
 
   if (!id) return null;
+
   return (
     <Tile
       id={id}
@@ -132,24 +135,19 @@ const MediaTiles = React.memo(({ media, toggleMeta, index }) => {
 
 const FilmInnerCarousel = React.forwardRef(({ films, id }, ref) => {
   const [currentMetaShowingTile, setShowMetaStatus] = useState(null);
-  const [isMetaShowing, setIsMetaShowing] = useState(false);
+  const [outerTileIndex, setOuterTileIndex] = useState(null);
 
-  useEffect(() => {
-    if (currentMetaShowingTile) {
-      setIsMetaShowing(true);
-    } else {
-      setIsMetaShowing(false);
-    }
-    return () => {
-      setIsMetaShowing(false);
-    };
-  }, [currentMetaShowingTile]);
+  const setOuterTileHoverIndex = (index) => {
+    const indexVal = index === 0 || index === films.length - 1;
+    setOuterTileIndex(indexVal ? index : null);
+  };
 
   return (
     <FilmInnerCarouselContainer
       ref={ref}
       id={id}
       className={currentMetaShowingTile ? 'showMeta' : 'hideMeta'}
+      mediaTileIndex={outerTileIndex}
     >
       <TileContainer>
         {films.map((film, index) => (
@@ -157,8 +155,9 @@ const FilmInnerCarousel = React.forwardRef(({ films, id }, ref) => {
             key={index.toString()}
             className={classnames(
               currentMetaShowingTile === index && 'showMeta',
-              !isMetaShowing && 'hideMeta'
+              currentMetaShowingTile === null && 'hideMeta'
             )}
+            onMouseOver={() => setOuterTileHoverIndex(index)}
           >
             <MediaTiles
               media={film}
