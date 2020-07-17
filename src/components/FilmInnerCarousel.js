@@ -68,6 +68,9 @@ const FilmInnerCarouselContainer = styled.div`
 
   &.hideMeta {
     &:hover {
+      margin-right: 28px;
+      margin-left: 28px;
+
       ${TileWrapper} {
         transform: translateX(-28px);
       }
@@ -75,20 +78,21 @@ const FilmInnerCarouselContainer = styled.div`
   }
 
   &.showMeta {
+    margin-right: 68px;
+    margin-left: 68px;
+
     ${TileWrapper} {
       transform: translateX(-68px);
     }
 
     &:hover {
+      margin-right: 68px;
+      margin-left: 68px;
+
       ${TileWrapper} {
         transform: translateX(-68px);
       }
     }
-  }
-
-  &:hover {
-    margin-right: 28px;
-    margin-left: 28px;
   }
 
   &:nth-last-of-type(1) {
