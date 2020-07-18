@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSetRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import classnames from 'classnames';
 
@@ -11,6 +11,7 @@ import Tile from '@components/Tile';
 import styled from '@emotion/styled';
 
 import mediaTile from '@atoms/mediaTile.atom';
+import appTileMetaShown from '@atoms/appTileStatus.atom';
 
 const TileWrapper = styled.div`
   margin-right: 8px;
@@ -110,9 +111,11 @@ const TileContainer = styled.div`
 `;
 
 const MediaTiles = React.memo(({ media, toggleMeta, index }) => {
-  const [showTileMeta, setShowMeta] = useState(false);
   const [id, setTileId] = useState(null);
   const setMediaData = useSetRecoilState(mediaTile(id));
+  const [currentMetaTile, setCurrentMetaTile] = useRecoilState(
+    appTileMetaShown
+  );
 
   useEffect(() => {
     setTileId(uuidv4());
@@ -122,17 +125,21 @@ const MediaTiles = React.memo(({ media, toggleMeta, index }) => {
     setMediaData(media);
   }, [media, id]);
 
-  useEffect(() => {
-    toggleMeta(showTileMeta ? index : null);
-  }, [showTileMeta]);
+  const setMetaTile = (tileId) => {
+    setCurrentMetaTile({
+      currentMetaTileId: tileId
+    });
+
+    toggleMeta(tileId === id ? index : null);
+  };
 
   if (!id) return null;
 
   return (
     <Tile
       id={id}
-      showMeta={showTileMeta}
-      toggleMeta={() => setShowMeta(!showTileMeta)}
+      showMeta={currentMetaTile?.currentMetaTileId === id}
+      toggleMeta={setMetaTile}
     />
   );
 });
