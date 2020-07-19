@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 const baseURL =
-  process.env.NODE_ENV === 'development'
+  process.env.NODE_ENV !== 'development'
     ? 'http://localhost:9000'
     : 'https://primeflix-be.herokuapp.com';
 
