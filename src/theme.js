@@ -4,7 +4,8 @@ const colors = {
   white: '#fff',
   lightgrey: '#D3D3D3',
   gray: '#b1b1b180',
-  black: '#000'
+  black: '#000',
+  meta: '#18232D'
 };
 
 const breakPoints = {
