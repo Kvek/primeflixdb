@@ -56,7 +56,6 @@ const BackdropGradient = styled.div`
 
 const BackdropImage = ({ films }) => {
   const config = useRecoilValue(appConfig);
-  const { secure_base_url } = config;
 
   if (!films.length) return null;
 
@@ -64,7 +63,7 @@ const BackdropImage = ({ films }) => {
     <Carousel duration={10000}>
       {films.map((film) => (
         <BackdropImageContainer
-          image={`${secure_base_url}original${film.backdrop_path}`}
+          image={`${config?.images?.secure_base_url}original${film.backdrop_path}`}
           key={film.backdrop_path}
         >
           <BackdropGradientContainer>

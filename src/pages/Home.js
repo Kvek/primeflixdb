@@ -3,7 +3,6 @@ import { useRecoilValue } from 'recoil';
 
 import styled from '@emotion/styled';
 
-import appConfig from '@atoms/appConfig.atom';
 import popularFilms from '@atoms/popularFilms.atom';
 
 import BackdropImage from '@components/BackdropImage';
@@ -30,15 +29,10 @@ const TilesContainer = styled.div`
 
 const Home = () => {
   const popular = useRecoilValue(popularFilms);
-  const config = useRecoilValue(appConfig);
-  const { images } = config;
 
   return (
     <HomeContainer>
-      <BackdropImage
-        baseUrl={images?.secure_base_url}
-        films={popular.length !== 0 ? popular[0] : []}
-      />
+      <BackdropImage films={popular.length !== 0 ? popular[0] : []} />
       <TilesContainer style={{ marginTop: popular.length ? '-120px' : 0 }}>
         <NewFilmCarousel films={popular} />
       </TilesContainer>
