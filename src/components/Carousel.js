@@ -11,7 +11,7 @@ const CarouselContainer = styled.div`
 const CarouselInnerContainer = styled.div`
   display: flex;
   width: 100%;
-  transition: transform 0.75s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  transition: transform 1750ms ease;
   z-index: 1;
   min-height: 100%;
   height: 100%;
@@ -24,20 +24,19 @@ const Carousel = ({ duration, children }) => {
     carouselRef.current.addEventListener('transitionend', () => {
       carouselRef.current.appendChild(carouselRef.current.firstElementChild);
 
-      carouselRef.current.style.transition = 'none';
-      carouselRef.current.style.transform = 'translate(0)';
+      carouselRef.current.style.transition = 'none 1750ms ease';
+      carouselRef.current.style.transform = 'translateX(0)';
 
       setTimeout(() => {
-        carouselRef.current.style.transition =
-          'all 0.75s cubic-bezier(0.785, 0.135, 0.150, 0.860)';
+        carouselRef.current.style.transition = 'transform 1750ms ease';
       });
     });
-  }, [carouselRef.current]);
+  }, []);
 
   useEffect(() => {
     setInterval(() => {
       carouselRef.current.style.justifyContent = 'flex-start';
-      carouselRef.current.style.transform = 'translate(-100%)';
+      carouselRef.current.style.transform = 'translateX(-100%)';
     }, duration);
   }, []);
 
@@ -58,4 +57,5 @@ Carousel.propTypes = {
 Carousel.defaultProps = {
   duration: 5500
 };
-export default Carousel;
+
+export default React.memo(Carousel);
