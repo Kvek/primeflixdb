@@ -34,6 +34,7 @@ import Sidebar from '@components/Sidebar';
 import Navbar from '@components/Navbar';
 
 import Films from '@pages/Films';
+import FilmDetails from '@pages/FilmDetails';
 import Home from '@pages/Home';
 import Tv from '@pages/Tv';
 import Trailers from '@pages/Trailers';
