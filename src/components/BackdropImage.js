@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useRecoilValue } from 'recoil';
 
@@ -8,16 +8,20 @@ import filmShape from '@shapes/film';
 
 import appConfig from '@atoms/appConfig.atom';
 
+import Carousel from '@app/components/Carousel';
+
 const BackdropImageContainer = styled.div`
+  min-width: 100%;
   width: 100%;
   height: 100%;
-  height: 650px;
+  min-height: 650px;
+  display: flex;
   background-image: url(${(props) => props.image});
   background-repeat: no-repeat;
   background-position: center;
-  position: absolute;
   background-size: cover;
   transition: all 0.5s linear;
+  position: relative;
 
   @media (min-width: ${(props) => props.theme.maxPageWidth.desktop}) {
     height: 650px;
@@ -26,7 +30,7 @@ const BackdropImageContainer = styled.div`
 `;
 
 const BackdropGradientContainer = styled.div`
-  position: relative;
+  position: absolute;
   width: 100%;
   height: 100%;
 `;
@@ -52,46 +56,23 @@ const BackdropGradient = styled.div`
 
 const BackdropImage = ({ films }) => {
   const config = useRecoilValue(appConfig);
-  const [current, setCurrent] = useState(0);
   const { secure_base_url } = config;
-
-  function useInterval(callback, delay) {
-    const savedCallback = useRef();
-
-    // Remember the latest callback.
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    // Set up the interval.
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-      if (delay !== null) {
-        const id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  }
-
-  useInterval(() => {
-    setCurrent(current >= films.length - 1 ? 0 : current + 1);
-  }, 15000);
 
   if (!films.length) return null;
 
   return (
-    <BackdropImageContainer
-      image={
-        films[current] &&
-        `${secure_base_url}original${films[current].backdrop_path}`
-      }
-    >
-      <BackdropGradientContainer>
-        <BackdropGradient />
-      </BackdropGradientContainer>
-    </BackdropImageContainer>
+    <Carousel duration={10000}>
+      {films.map((film) => (
+        <BackdropImageContainer
+          image={`${secure_base_url}original${film.backdrop_path}`}
+          key={film.backdrop_path}
+        >
+          <BackdropGradientContainer>
+            <BackdropGradient />
+          </BackdropGradientContainer>
+        </BackdropImageContainer>
+      ))}
+    </Carousel>
   );
 };
 

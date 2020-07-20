@@ -26,7 +26,6 @@ const HomeContainer = styled.div`
 `;
 
 const TilesContainer = styled.div`
-  margin-top: 450px;
   display: flex;
   flex-direction: column;
   z-index: 2;
@@ -53,7 +52,7 @@ const Home = () => {
   return (
     <HomeContainer>
       <BackdropImage baseUrl={secure_base_url} films={trending} />
-      <TilesContainer>
+      <TilesContainer style={{ marginTop: trending.length ? '-120px' : 0 }}>
         <FilmCarouselContainer films={popular} title='popular' />
         <FilmCarouselContainer films={nowPlaying} title='Now playing' />
         <FilmCarouselContainer films={trending} title='trending' />
