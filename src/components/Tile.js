@@ -180,7 +180,6 @@ const Tile = ({ id, showMeta, toggleMeta }) => {
   const mediaData = useRecoilValue(mediaTile(id));
   const path = 'https://image.tmdb.org/t/p/original/';
 
-  // console.log(mediaData);
   const {
     backdrop_path,
     poster_path,
