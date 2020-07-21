@@ -6,6 +6,8 @@ import classnames from 'classnames';
 
 import filmShape from '@app/shapes/film';
 
+import { getMoviedata } from '@app/Api';
+
 import Tile from '@components/Tile';
 
 import styled from '@emotion/styled';
@@ -122,7 +124,11 @@ const MediaTiles = React.memo(({ media, toggleMeta, index }) => {
   }, []);
 
   useEffect(() => {
-    setMediaData(media);
+    getMoviedata(media.id, 'images,videos,release_dates,keywords').then(
+      (res) => {
+        setMediaData(res.data);
+      }
+    );
   }, [media, id]);
 
   const setMetaTile = (tileId) => {

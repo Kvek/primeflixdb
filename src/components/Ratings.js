@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
+
 import {
   Rating12,
   Rating12A,
@@ -12,8 +14,18 @@ import styled from '@emotion/styled';
 
 const Rating = styled.div`
   color: ${(props) => props.theme.colors.lightgrey};
-  width: 50px;
-  height: 20px;
+  width: 100%;
+  height: 100%;
+`;
+
+const RatingContainer = styled.div`
+  color: ${(props) => props.theme.colors.lightgrey};
+  max-width: 40px;
+  max-height: 40px;
+
+  svg {
+    width: 100%;
+  }
 `;
 
 const Ratings = ({ rating }) => {
@@ -90,7 +102,7 @@ const Ratings = ({ rating }) => {
         break;
 
       default:
-        ratingIcon = <Rating>{rating}</Rating>;
+        ratingIcon = <Rating>{ratingString}</Rating>;
         break;
     }
 
@@ -100,7 +112,7 @@ const Ratings = ({ rating }) => {
   const getCertificate = (film) => film?.release_dates[0]?.certification;
 
   useEffect(() => {
-    const certificateList = rating?.results?.filter(
+    const certificateList = rating?.results.filter(
       (film) => getCertificate(film) !== ''
     );
 
@@ -124,7 +136,11 @@ const Ratings = ({ rating }) => {
     }
   }, [rating]);
 
-  return currentRating ? 'getRatingIcon(currentRating)' : null;
+  return (
+    <RatingContainer>
+      {currentRating ? getRatingIcon(currentRating) : null}
+    </RatingContainer>
+  );
 };
 
 export default Ratings;

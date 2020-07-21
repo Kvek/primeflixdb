@@ -27,7 +27,8 @@
     "react/jsx-curly-newline": 0,
     "no-confusing-arrow": 0,
     "indent": 0,
-    "no-nested-ternary": 0
+    "no-nested-ternary": 0,
+    "react/jsx-one-expression-per-line": 0
   },
   "settings": {
     "import/resolver": {
