@@ -13,8 +13,7 @@ import Carousel from '@app/components/Carousel';
 const BackdropImageContainer = styled.div`
   min-width: 100%;
   width: 100%;
-  height: 100%;
-  min-height: 650px;
+  height: 350px;
   display: flex;
   background-image: url(${(props) => props.image});
   background-repeat: no-repeat;
@@ -23,9 +22,12 @@ const BackdropImageContainer = styled.div`
   transition: all 0.5s linear;
   position: relative;
 
+  @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
+    height: 500px;
+  }
+
   @media (min-width: ${(props) => props.theme.maxPageWidth.desktop}) {
     height: 650px;
-    background-size: cover;
   }
 `;
 
@@ -41,7 +43,7 @@ const BackdropGradient = styled.div`
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -120px;
+  bottom: -125px;
 
   background-image: linear-gradient(
     rgba(20, 20, 20, 0) 0,
@@ -60,7 +62,7 @@ const BackdropImage = ({ films }) => {
   if (!films.length) return null;
 
   return (
-    <Carousel duration={10000}>
+    <Carousel duration={100000}>
       {films.map((film) => (
         <BackdropImageContainer
           image={`${config?.images?.secure_base_url}original${film.backdrop_path}`}
