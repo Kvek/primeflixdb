@@ -62,7 +62,7 @@ const BackdropImage = ({ films }) => {
   if (!films.length) return null;
 
   return (
-    <Carousel duration={100000}>
+    <Carousel duration={10000}>
       {films.map((film) => (
         <BackdropImageContainer
           image={`${config?.images?.secure_base_url}original${film.backdrop_path}`}
