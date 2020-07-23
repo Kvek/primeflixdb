@@ -34,10 +34,14 @@ const Carousel = ({ duration, children }) => {
   }, []);
 
   useEffect(() => {
-    setInterval(() => {
+    const carouselInterval = setInterval(() => {
       carouselRef.current.style.justifyContent = 'flex-start';
       carouselRef.current.style.transform = 'translateX(-100%)';
     }, duration);
+
+    return () => {
+      clearInterval(carouselInterval);
+    };
   }, []);
 
   return (
