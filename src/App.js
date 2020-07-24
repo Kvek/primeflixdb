@@ -19,7 +19,7 @@ import {
   faHeart,
   faPlus
 } from '@fortawesome/fontawesome-free-solid';
-import { Router } from '@reach/router';
+import { Router, Redirect } from '@reach/router';
 
 import appConfig from '@atoms/appConfig.atom';
 import trendingFilms from '@atoms/trendingFilms.atom';
@@ -34,7 +34,7 @@ import Sidebar from '@components/Sidebar';
 import Navbar from '@components/Navbar';
 
 import Films from '@pages/Films';
-import FilmDetails from '@pages/FilmDetails';
+import Details from '@pages/Details';
 import Home from '@pages/Home';
 import Tv from '@pages/Tv';
 import Trailers from '@pages/Trailers';
@@ -109,10 +109,12 @@ const App = ({ numberOfTiles, deviceWidths }) => {
           <Navbar />
           <Router>
             <Home path='/' />
-            <Tv path='/tv' />
-            <Films path='/films' />
+            <Tv path='tv' />
+            <Films path='films' />
+            <Details path='details/:id' />
             <Trailers path='/trailers' />
             <Playlists path='/playlists' />
+            <Redirect from='*' to='/' noThrow />
           </Router>
         </AppContainer>
         <Sidebar />

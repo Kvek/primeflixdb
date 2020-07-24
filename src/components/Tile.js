@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useRecoilValue } from 'recoil';
 
 import styled from '@emotion/styled';
+import { Link } from '@reach/router';
 
 import mediaTile from '@atoms/mediaTile.atom';
 
@@ -112,6 +113,11 @@ const MediaTitle = styled.h1`
   width: 220px;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  a {
+    text-decoration: none;
+    color: ${(props) => props.theme.colors.white};
+  }
 `;
 
 const StarContainer = styled.div`
@@ -214,7 +220,9 @@ const Tile = ({ id, showMeta, toggleMeta }) => {
 
           <Content>
             <MediaTitle>
-              {title}
+              <Link from='tile' to={`/details/${id}`}>
+                {title}
+              </Link>
               <StarContainer>
                 <StarRating rating={vote_average} />
                 <span>({vote_count})</span>
