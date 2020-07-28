@@ -8,7 +8,8 @@ import filmShape from '@shapes/film';
 
 import appConfig from '@atoms/appConfig.atom';
 
-import Carousel from '@app/components/Carousel';
+import Carousel from '@components/Carousel';
+import TileLoader from '@components/TileLoader';
 
 const BackdropImageContainer = styled.div`
   min-width: 100%;
@@ -21,6 +22,20 @@ const BackdropImageContainer = styled.div`
   background-size: cover;
   transition: all 0.5s linear;
   position: relative;
+
+  @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
+    height: 500px;
+  }
+
+  @media (min-width: ${(props) => props.theme.maxPageWidth.desktop}) {
+    height: 650px;
+  }
+`;
+
+const TileLoaderConatiner = styled.div`
+  min-width: 100%;
+  width: 100%;
+  height: 350px;
 
   @media (min-width: ${(props) => props.theme.maxPageWidth.tablet}) {
     height: 500px;
@@ -59,7 +74,13 @@ const BackdropGradient = styled.div`
 const BackdropImage = ({ films }) => {
   const config = useRecoilValue(appConfig);
 
-  if (!films.length) return null;
+  if (!films.length) {
+    return (
+      <TileLoaderConatiner>
+        <TileLoader />
+      </TileLoaderConatiner>
+    );
+  }
 
   return (
     <Carousel duration={10000}>
@@ -78,7 +99,11 @@ const BackdropImage = ({ films }) => {
 };
 
 BackdropImage.propTypes = {
-  films: PropTypes.arrayOf(PropTypes.shape(filmShape)).isRequired
+  films: PropTypes.arrayOf(PropTypes.shape(filmShape))
+};
+
+BackdropImage.defaultProps = {
+  films: []
 };
 
 export default BackdropImage;

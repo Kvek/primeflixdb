@@ -7,7 +7,6 @@ import styled from '@emotion/styled';
 import popularFilms from '@atoms/popularFilms.atom';
 
 import BackdropImage from '@components/BackdropImage';
-
 import NewFilmCarousel from '@components/NewFilmCarousel';
 import LoadingTileGroup from '@components/LoadingTileGroup';
 
@@ -31,6 +30,10 @@ const TilesContainer = styled.div`
   height: 100%;
 `;
 
+const LoadingTileContainer = styled.div`
+  padding: 0 50px;
+`;
+
 const Home = () => {
   const popular = useRecoilValue(popularFilms);
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(3);
@@ -48,7 +51,7 @@ const Home = () => {
 
   return (
     <HomeContainer>
-      <BackdropImage films={popular.length !== 0 ? popular[0] : []} />
+      <BackdropImage films={popular} />
       <TilesContainer style={{ marginTop: popular.length ? '-120px' : 0 }}>
         {carouselTypes.map(
           (carousel, index) =>
@@ -60,9 +63,9 @@ const Home = () => {
 
       {/* listen to loading changes inside each carousel */}
       {currentCarouselIndex !== carouselTypes.length && (
-        <div ref={ref}>
+        <LoadingTileContainer ref={ref}>
           <LoadingTileGroup count={5} />
-        </div>
+        </LoadingTileContainer>
       )}
     </HomeContainer>
   );
