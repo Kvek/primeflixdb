@@ -1,0 +1,32 @@
+const carouselTypes = [
+  'movie_discover',
+  'tv_discover',
+  'top_movies',
+  'upcoming_movies',
+  'latest_movies',
+  'trending_movies',
+  'upcoming_tv',
+  'latest_tv',
+  'trending_tv',
+  'action',
+  'adventure',
+  'animation',
+  'comedy',
+  'crime',
+  'documentary',
+  'drama',
+  'family',
+  'fantasy',
+  'history',
+  'horror',
+  'music',
+  'mystery',
+  'romance',
+  'science_fiction',
+  'tv_movie',
+  'thriller',
+  'war',
+  'western'
+];
+
+export default carouselTypes;
